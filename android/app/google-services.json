@@ -1,0 +1,270 @@
+{
+  "project_info": {
+    "project_number": "466513854712",
+    "project_id": "flutter-huops-app",
+    "storage_bucket": "flutter-huops-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:466513854712:android:b7424c77f93b376c7ebb0d",
+        "android_client_info": {
+          "package_name": "app.app.com.tset"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "466513854712-rasrqcpv12cit80sl752rp1af4vma15f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwy_UVX4c2j4kiLi-oenlzh7QPu1ROzew"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "466513854712-rasrqcpv12cit80sl752rp1af4vma15f.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "466513854712-3qfhlpr0pph2luaaf8utaijlc01ovd3l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.huopsdelivery.apple"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:466513854712:android:624a2f8381e949237ebb0d",
+        "android_client_info": {
+          "package_name": "com.huopsapp.driver"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "466513854712-dms7dupidkgedece6n8lqv3b3ki5lu4r.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.huopsapp.driver",
+            "certificate_hash": "2a7a2fafa95879f590c1337c5df4ec99c8b46f21"
+          }
+        },
+        {
+          "client_id": "466513854712-rasrqcpv12cit80sl752rp1af4vma15f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwy_UVX4c2j4kiLi-oenlzh7QPu1ROzew"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "466513854712-rasrqcpv12cit80sl752rp1af4vma15f.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "466513854712-3qfhlpr0pph2luaaf8utaijlc01ovd3l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.huopsdelivery.apple"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:466513854712:android:4e7fe357e13a4ea77ebb0d",
+        "android_client_info": {
+          "package_name": "com.huopsapp.jmskef"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "466513854712-bstekgjlgud59pgklqbjma88964tla0a.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.huopsapp.jmskef",
+            "certificate_hash": "a2aab53bd3cf7669f3a6b7f705b0b4c1227f41a1"
+          }
+        },
+        {
+          "client_id": "466513854712-dlrrq5sj0v8up1kg22i7k8elt00fqv3g.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.huopsapp.jmskef",
+            "certificate_hash": "a040f302c3155647f19ae451ebfdc20a7d8fe92c"
+          }
+        },
+        {
+          "client_id": "466513854712-muq9rs0lp8lbvckdi40mp5lflmk8rjmj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.huopsapp.jmskef",
+            "certificate_hash": "b4d4edbe270edf5e65ce37882a0f1349cbd19a44"
+          }
+        },
+        {
+          "client_id": "466513854712-o6haubq03925mobase7ves30c8ik4fae.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.huopsapp.jmskef",
+            "certificate_hash": "2a7a2fafa95879f590c1337c5df4ec99c8b46f21"
+          }
+        },
+        {
+          "client_id": "466513854712-oi1c0dr2i3sg22a6op2ae8df70cmqulj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.huopsapp.jmskef",
+            "certificate_hash": "67ee692b602255c0f030c83832f73dd6538342e8"
+          }
+        },
+        {
+          "client_id": "466513854712-q157v6p3mod501hd8mm73pn0pte4b3e3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.huopsapp.jmskef",
+            "certificate_hash": "23fb5e85b90d41a3ac51a29d5e760d351c410e27"
+          }
+        },
+        {
+          "client_id": "466513854712-rasrqcpv12cit80sl752rp1af4vma15f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwy_UVX4c2j4kiLi-oenlzh7QPu1ROzew"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "466513854712-rasrqcpv12cit80sl752rp1af4vma15f.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "466513854712-3qfhlpr0pph2luaaf8utaijlc01ovd3l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.huopsdelivery.apple"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:466513854712:android:d83553b45a4902897ebb0d",
+        "android_client_info": {
+          "package_name": "com.huopsapp.vendor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "466513854712-2rh17bqupcfdvg0idjfs0f7c3ss3lpim.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.huopsapp.vendor",
+            "certificate_hash": "b4d4edbe270edf5e65ce37882a0f1349cbd19a44"
+          }
+        },
+        {
+          "client_id": "466513854712-mk8mt2nkmg64s0mdlvj959m2i4ikjnid.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.huopsapp.vendor",
+            "certificate_hash": "d311d2dd6b7bfb9575cde87da68c0b5b4fedebb9"
+          }
+        },
+        {
+          "client_id": "466513854712-rasrqcpv12cit80sl752rp1af4vma15f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwy_UVX4c2j4kiLi-oenlzh7QPu1ROzew"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "466513854712-rasrqcpv12cit80sl752rp1af4vma15f.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "466513854712-3qfhlpr0pph2luaaf8utaijlc01ovd3l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.huopsdelivery.apple"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:466513854712:android:62ca134dbf9884847ebb0d",
+        "android_client_info": {
+          "package_name": "com.huopsapp.vendor_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "466513854712-sgcualupo772g7k6dvafhfkrbbhp69rj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.huopsapp.vendor_app",
+            "certificate_hash": "a040f302c3155647f19ae451ebfdc20a7d8fe92c"
+          }
+        },
+        {
+          "client_id": "466513854712-rasrqcpv12cit80sl752rp1af4vma15f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAwy_UVX4c2j4kiLi-oenlzh7QPu1ROzew"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "466513854712-rasrqcpv12cit80sl752rp1af4vma15f.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "466513854712-3qfhlpr0pph2luaaf8utaijlc01ovd3l.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.huopsdelivery.apple"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

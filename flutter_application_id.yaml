@@ -1,0 +1,7 @@
+flutter_application_id:
+  android:
+    id: "com.huopsapp.jmskef"
+    name: "Glover"
+  ios:
+    id: "com.huopsapp.jmskef"
+    name: "Glover"
