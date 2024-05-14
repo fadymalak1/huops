@@ -16,6 +16,7 @@ class ProductDetailsCartBottomSheet extends StatelessWidget {
   }) : super(key: key);
 
   final ProductDetailsViewModel model;
+
   @override
   Widget build(BuildContext context) {
     return VStack(
@@ -27,76 +28,76 @@ class ProductDetailsCartBottomSheet extends StatelessWidget {
             padding: EdgeInsets.symmetric(horizontal: 20),
             color: Colors.transparent,
             child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    ElevatedButton(
-                      onPressed: (){},
-                      style:ButtonStyle(
-                      backgroundColor: MaterialStateProperty.all<Color>(Color(0xffec4513)),
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ElevatedButton(
+                  onPressed: () {},
+                  style: ButtonStyle(
+                      backgroundColor:
+                          MaterialStateProperty.all<Color>(Color(0xffec4513)),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)))),
-                      child: "Restaurant Menu".tr().text.make(),
-                    ),
-
-                    QtyStepper(
-                      defaultValue: model.product.selectedQty,
-                      min: 1,
-                      max: (model.product.availableQty != null &&
-                          model.product.availableQty! > 0)
-                          ? model.product.availableQty!
-                          : 20,
-                      disableInput: true,
-                      onChange: model.updatedSelectedQty,
-                    ),
-                  ],
+                          RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15)))),
+                  child: "Restaurant Menu".tr().text.make(),
                 ),
+                QtyStepper(
+                  defaultValue: model.product.selectedQty,
+                  min: 1,
+                  max: (model.product.availableQty != null &&
+                          model.product.availableQty! > 0)
+                      ? model.product.availableQty!
+                      : 20,
+                  disableInput: true,
+                  onChange: model.updatedSelectedQty,
+                ),
+              ],
+            ),
           ),
         ),
 
         //
         Visibility(
-          visible: model.product.hasStock,
-          child: Container(
-            padding: EdgeInsets.all(15),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              color: AppColor.primaryColor,
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Color(0xffec4513),
+            visible: model.product.hasStock,
+            child: Container(
+              padding: EdgeInsets.all(15),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: AppColor.primaryColor,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(15),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Color(0xffec4513),
+                    ),
+                    child: model.product.selectedQty.toString().text.make(),
                   ),
-                  child: model.product.selectedQty.toString().text.make(),
-                ),
-                InkWell(
-                  onTap: (){
-                    model.addToCart(context: context);
-                  },
-                  child: "Add to cart".tr().text.white.xl.make(),
-                ),
-                "|".text.xl2.color(Colors.white).make(),
-                CurrencyHStack(
-                  [
-                    model.currencySymbol.text.white.lg.make(),
-                    model.total
-                        .currencyValueFormat()
-                        .text
-                        .white
-                        .letterSpacing(1.5)
-                        .xl
-                        .semiBold
-                        .make(),
-                  ],
-                ),
-              ],
-            ),
-          )
-        ).p20(),
+                  InkWell(
+                    onTap: () {
+                      model.addToCart(context: context);
+                    },
+                    child: "Add to cart".tr().text.white.xl.make(),
+                  ),
+                  "|".text.xl2.color(Colors.white).make(),
+                  CurrencyHStack(
+                    [
+                      model.currencySymbol.text.white.lg.make(),
+                      model.total
+                          .currencyValueFormat()
+                          .text
+                          .white
+                          .letterSpacing(1.5)
+                          .xl
+                          .semiBold
+                          .make(),
+                    ],
+                  ),
+                ],
+              ),
+            )).p20(),
         Visibility(
           visible: !model.product.hasStock,
           child: "No stock"

@@ -1,6 +1,9 @@
+import 'package:banner_carousel/banner_carousel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:glass_kit/glass_kit.dart';
 import 'package:huops/constants/app_colors.dart';
+import 'package:huops/extensions/string.dart';
 import 'package:huops/models/service.dart';
 import 'package:huops/utils/ui_spacer.dart';
 import 'package:huops/utils/utils.dart';
@@ -17,6 +20,17 @@ import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:stacked/stacked.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../constants/app_strings.dart';
+import '../../../widgets/busy_indicator.dart';
+import '../../../widgets/buttons/custom_button.dart';
+import '../../../widgets/buttons/qty_stepper.dart';
+import '../../../widgets/cards/custom.visibility.dart';
+import '../../../widgets/currency_hstack.dart';
+import '../../../widgets/tags/product_tags.dart';
+import '../product/widgets/product_details.header.dart';
+import '../product/widgets/product_details_cart.bottom_sheet.dart';
+import '../product/widgets/product_options.header.dart';
+
 class ServiceDetailsPage extends StatelessWidget {
   const ServiceDetailsPage(
     this.service, {
@@ -28,6 +42,7 @@ class ServiceDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final currencySymbol = AppStrings.currencySymbol;
     return ViewModelBuilder<ServiceDetailsViewModel>.reactive(
       viewModelBuilder: () => ServiceDetailsViewModel(context, service),
       onViewModelReady: (model) => model.getServiceDetails(),
@@ -39,182 +54,282 @@ class ServiceDetailsPage extends StatelessWidget {
           showLeadingAction: true,
           elevation: 0,
           appBarColor: Colors.transparent,
-          appBarItemColor: AppColor.primaryColor,
-          // leading: CustomLeading(),
-          leading: FittedBox(
-            child: SizedBox(
-              width: 50,
-              height: 40,
-              child: Icon(
-                !Utils.isArabic
-                    ? FlutterIcons.arrow_left_fea
-                    : FlutterIcons.arrow_right_fea,
-                color: AppColor.primaryColor,
-                size: 20,
-              )
-                  .centered()
-                  .p4()
-                  .box
-                  .roundedSM
-                  .color(context.theme.colorScheme.background)
-                  .make()
-                  .onTap(
-                    () => context.pop(),
-                  )
-                  .px8(),
-            ),
-          ),
-
+          appBarItemColor: Colors.white,
+          showCart: true,
           actions: [
             SizedBox(
-              width: 60,
-              height: 60,
+              width: 50,
+              height: 50,
               child: FittedBox(
                 child: ShareButton(
                   model: vm,
                 ),
               ),
             ),
+            UiSpacer.hSpace(10),
           ],
-          body: VStack(
-            [
-              CustomImage(
-                imageUrl:
-                    (vm.service.photos != null && vm.service.photos!.isNotEmpty)
-                        ? vm.service.photos!.first
-                        : '',
-                width: double.infinity,
-                height: context.percentHeight * 50,
-                canZoom: true,
-              ),
-
-              //details
-              VStack(
-                [
-                  //name
-                  vm.service.name.text.medium.xl.make(),
-                  //price
-                  ServiceDetailsPriceSectionView(vm.service),
-
-                  //rest details
-                  UiSpacer.verticalSpace(),
-                  VStack(
+          body: CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child: Container(
+                  child: ZStack(
                     [
-                      //photos
-                      CustomMasonryGridView(
-                        crossAxisSpacing: 10,
-                        mainAxisSpacing: 10,
-                        crossAxisCount: 3,
-                        items: (vm.service.photos ?? [])
-                            .map(
-                              (photo) => CustomImage(
-                                imageUrl: photo,
-                                width: double.infinity,
-                                height: 80,
-                                canZoom: true,
-                              ).box.roundedSM.clip(Clip.antiAlias).make(),
-                            )
-                            .toList(),
-                      ),
-
-                      //description
-                      HtmlTextView(vm.service.description),
-                    ],
-                  )
-                      .box
-                      .p8
-                      .color(context.theme.colorScheme.background)
-                      .roundedSM
-                      .make(),
-                  //options if any
-                  if (vm.service.optionGroups != null &&
-                      vm.service.optionGroups!.isNotEmpty)
-                    VStack(
-                      [
-                        UiSpacer.divider().py12(),
-                        //title
-                        "Additional Options".tr().text.xl.bold.make().py12(),
-                        //
-                        ListView.builder(
-                          padding: EdgeInsets.zero,
-                          shrinkWrap: true,
-                          physics: NeverScrollableScrollPhysics(),
-                          itemCount: vm.service.optionGroups!.length,
-                          itemBuilder: (context, index) {
-                            //
-                            final optionGroup = vm.service.optionGroups![index];
-                            //sublist
-                            return ListView.builder(
-                              padding: EdgeInsets.zero,
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: optionGroup.options.length,
-                              itemBuilder: (context, index) {
-                                //
-                                final option = optionGroup.options[index];
-                                //
-                                return ServiceOptionListItem(
-                                  option: option,
-                                  optionGroup: optionGroup,
-                                  model: vm,
-                                );
-                              },
-                            );
-                          },
-                        ),
-                      ],
-                    ),
-
-                  UiSpacer.divider().py12(),
-                  //vendor profile
-                  "Provider".tr().text.medium.xl.make().py12(),
-                  HStack(
-                    [
-                      //provider logo
                       CustomImage(
-                        imageUrl: vm.service.vendor.logo,
-                        width: 50,
-                        height: 50,
-                      ).box.roundedSM.clip(Clip.antiAlias).make(),
-                      //provider details
-                      VStack(
-                        [
-                          vm.service.vendor.name.text.semiBold.lg.make(),
-                          "${vm.service.vendor.phone}".text.medium.sm.make(),
-                          "${vm.service.vendor.address}"
-                              .text
-                              .light
-                              .sm
-                              .maxLines(1)
-                              .make(),
-                        ],
-                      ).px12().expand(),
-                    ],
-                  )
-                      .box
-                      .p8
-                      .color(context.theme.colorScheme.background)
-                      .shadowXs
-                      .roundedSM
-                      .make()
-                      .onInkTap(() => vm.openVendorPage()),
+                        imageUrl:
+                            (vm.service.photos != null && vm.service.photos!.isNotEmpty)
+                                ? vm.service.photos!.first
+                                : '',
+                        width: double.infinity,
+                        height: context.percentHeight * 40,
+                        //context.percentHeight * 50,
+                        canZoom: true,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.only(
+                          topRight: Radius.circular(25),
+                          topLeft: Radius.circular(25),
+                        )),
+                        margin: EdgeInsets.only(top: 300),
+                        child: GlassContainer.clearGlass(
+                          borderRadius: BorderRadius.only(
+                            topRight: Radius.circular(25),
+                            topLeft: Radius.circular(25),
+                          ),
+                          blur: 15,
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                          child: VStack(
+                            [
+                              //product header
+                              VStack(
+                                [
+                                  30.heightBox,
 
-                  //spaces
-                  UiSpacer.verticalSpace(),
-                  UiSpacer.verticalSpace(),
-                  UiSpacer.verticalSpace(),
-                ],
-              )
-                  .wFull(context)
-                  .p20()
-                  .box
-                  .color(context.theme.colorScheme.background)
-                  .topRounded(value: 30)
-                  .make(),
+                                  //product name, vendor name, and price
+                                  HStack(
+                                    [
+                                      //name
+                                      VStack(
+                                        [
+                                          //product name
+                                          vm.service.name.text.xl2.semiBold.make(),
+                                          //vendor
+                                          vm.service.vendor.name.text.xl.make(),
+                                        ],
+                                      ).expand(),
+
+                                      //price
+                                      VStack(
+                                        [
+                                          //price
+                                          CurrencyHStack(
+                                            [
+                                              currencySymbol.text.lg.bold
+                                                  .color(Color(0xffec4513))
+                                                  .make(),
+                                              (vm.service.showDiscount
+                                                      ? vm.service.discountPrice
+                                                          ?.currencyValueFormat()
+                                                      : vm.service.price
+                                                          .currencyValueFormat())
+                                                  ?.text
+                                                  .xl2
+                                                  .color(Color(0xffec4513))
+                                                  .bold
+                                                  .make(),
+                                            ],
+                                            crossAlignment: CrossAxisAlignment.end,
+                                          ),
+                                          //discount
+                                          CustomVisibilty(
+                                            visible: vm.service.showDiscount,
+                                            child: CurrencyHStack(
+                                              [
+                                                currencySymbol
+                                                    .text.lineThrough.gray300.xs
+                                                    .make(),
+                                                vm.service.price
+                                                    .currencyValueFormat()
+                                                    .text
+                                                    .lineThrough
+                                                    .gray300
+                                                    .lg
+                                                    .medium
+                                                    .make(),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+
+                                  //product size details and more
+                                  HStack(
+                                    crossAlignment: CrossAxisAlignment.start,
+                                    [
+                                      //deliverable or not
+                                      VStack([
+                                        Container(
+                                          height: 100,
+                                          width: 100,
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.circular(10),
+                                              image: DecorationImage(
+                                                  image: NetworkImage(
+                                                      vm.service.vendor.featureImage),
+                                                  fit: BoxFit.cover)),
+                                        ),
+                                      ]),
+                                      //
+                                      UiSpacer.expandedSpace(),
+                                    ],
+                                  ).pOnly(top: Vx.dp10),
+                                ],
+                              ).px20().py12(),
+                              //product description
+                              UiSpacer.verticalSpace(space: 2).py12(),
+                              HtmlTextView(vm.service.description).px20(),
+                              UiSpacer.verticalSpace(space: 2).py12(),
+
+                              //options header
+                              Visibility(
+                                visible: vm.service.optionGroups!.isNotEmpty,
+                                child: VStack(
+                                  [
+                                    ProductOptionsHeader(
+                                      description:
+                                          "Select options to add them to the product/service"
+                                              .tr(),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              20.heightBox,
+                              VStack(
+                                [
+                                  //
+                                  Container(
+                                    padding: EdgeInsets.symmetric(horizontal: 20),
+                                    color: Colors.transparent,
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.pop(context);
+                                          },
+                                          style: ButtonStyle(
+                                              backgroundColor:
+                                              MaterialStateProperty.all<Color>(Color(0xffec4513)),
+                                              shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                                  RoundedRectangleBorder(
+                                                      borderRadius: BorderRadius.circular(15)))),
+                                          child: "Beauty center page".tr().text.make(),
+                                        ),
+                                        QtyStepper(
+                                          defaultValue:  1,
+                                          min: 1,
+                                          max: 10,
+                                          disableInput: true,
+                                          onChange: vm.updatedSelectedQty,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+
+                                  //
+                                  Container(
+                                    padding: EdgeInsets.all(15),
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(10),
+                                      color: AppColor.primaryColor,
+                                    ),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Container(
+                                          padding: EdgeInsets.all(15),
+                                          decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.circular(10),
+                                            color: Color(0xffec4513),
+                                          ),
+                                          child: vm.service.selectedQty.toString().text.make(),
+                                        ),
+                                        InkWell(
+                                          onTap: () {
+                                            vm.bookService();
+                                            // vm.addToCart(context: context);
+                                          },
+                                          child: "Add to cart".tr().text.white.xl.make(),
+                                        ),
+                                        "|".text.xl2.color(Colors.white).make(),
+                                        CurrencyHStack(
+                                          [
+                                            vm.currencySymbol.text.white.lg.make(),
+                                            vm.total
+                                                .currencyValueFormat()
+                                                .text
+                                                .white
+                                                .letterSpacing(1.5)
+                                                .xl
+                                                .semiBold
+                                                .make(),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ).p20(),
+                                ],
+                              )
+                                  .color(Colors.transparent)
+                                  .box
+                                  .make()
+                                  .wFull(context)
+                              // ServiceDetailsBottomSheet(vm),
+                            ],
+                          )
+                              .pOnly(bottom: context.percentHeight * 3)
+                              .box
+                              .outerShadow3Xl
+                              .color(Colors.transparent)
+                              .topRounded(value: 20)
+                              .clip(Clip.antiAlias)
+                              .make(),
+                        ),
+                      ),
+                      //add to fav
+                      // Positioned(
+                      //   right: 20,
+                      //   top: 180,
+                      //   child: CustomButton(
+                      //     elevation: 12,
+                      //     color: Colors.deepOrange.withOpacity(.5),
+                      //     // loading: model.isBusy,
+                      //     child: Icon(
+                      //       vm.service.isFavourite
+                      //           ? FlutterIcons.heart_ant
+                      //           : FlutterIcons.heart_fea,
+                      //       color: Colors.white,
+                      //     ),
+                      //     onPressed: () {
+                      //       !(vm.isAuthenticated() == true)
+                      //           ? vm.openLogin()
+                      //           : !(vm.service.isFavourite ?? false)
+                      //               ? vm.addToFavourite()
+                      //               : vm.removeFromFavourite();
+                      //     },
+                      //   ).cornerRadius(50).w(Vx.dp56).pOnly(right: Vx.dp24),
+                      // ),
+                    ],
+                  ).scrollVertical(),
+                ),
+              ),
             ],
-          ).scrollVertical(),
+          ).box.color(Colors.transparent).make(),
           //
-          bottomNavigationBar: ServiceDetailsBottomSheet(vm),
+          // bottomNavigationBar: ServiceDetailsBottomSheet(vm),
         );
       },
     );

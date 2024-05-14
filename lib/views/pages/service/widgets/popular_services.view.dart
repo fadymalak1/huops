@@ -38,7 +38,7 @@ class _PopularServicesViewState extends State<PopularServicesView> {
         return VStack(
           [
             //
-            ("Popular".tr() + " ${widget.vendorType.name}")
+            ("All".tr() + " ${widget.vendorType.name}")
                 .text
                 .lg
                 .medium
@@ -49,26 +49,27 @@ class _PopularServicesViewState extends State<PopularServicesView> {
               isLoading: vm.isBusy,
               crossAxisSpacing: 20,
               mainAxisSpacing: 20,
-              items: vm.services.map((service) {
+              items: vm.vendors.map((vendor) {
                 return ServiceGridViewItem(
-                  service: service,
-                  onPressed: vm.serviceSelected,
+                  // service: service,
+                  vendor: vendor,
+                  onPressed: vm.openVendorDetails,
                 );
               }).toList(),
             ).p12(),
 
             //view more
-            CustomOutlineButton(
-              height: 24,
-              child: "View More"
-                  .tr()
-                  .text
-                  .medium
-                  .sm
-                  .color(Utils.textColorByTheme())
-                  .makeCentered(),
-              onPressed: vm.openSearch,
-            ).px20(),
+            // CustomOutlineButton(
+            //   height: 24,
+            //   child: "View More"
+            //       .tr()
+            //       .text
+            //       .medium
+            //       .sm
+            //       .color(Utils.textColorByTheme())
+            //       .makeCentered(),
+            //   onPressed: vm.openSearch,
+            // ).px20(),
           ],
         ).py12();
       },

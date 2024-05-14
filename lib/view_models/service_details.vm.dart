@@ -30,6 +30,24 @@ class ServiceDetailsViewModel extends MyBaseViewModel {
   double total = 0.0;
   final currencySymbol = AppStrings.currencySymbol;
 
+
+  //
+  updatedSelectedQty(int qty) async {
+    service.selectedQty = qty;
+    calculateTotal();
+  }
+  //
+  calculateTotal() {
+    //
+    double? productPrice =
+    !service.showDiscount ? service.price : service.discountPrice;
+
+    //
+
+    total = productPrice! * double.parse(service.selectedQty.toString()) ;
+    notifyListeners();
+  }
+
   void getServiceDetails() async {
     //
     setBusyForObject(service, true);
@@ -38,6 +56,11 @@ class ServiceDetailsViewModel extends MyBaseViewModel {
       final oldProductHeroTag = service.heroTag;
       service = await serviceRequest.serviceDetails(service.id);
       service.heroTag = oldProductHeroTag;
+
+      //
+      total = service.price;
+      service.selectedQty = 1;
+      notifyListeners();
 
       clearErrors();
     } catch (error) {

@@ -7,11 +7,18 @@ import 'package:huops/view_models/base.view_model.dart';
 import 'package:huops/views/pages/service/service_details.page.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../models/vendor.dart';
+import '../../requests/vendor.request.dart';
+import '../../views/pages/vendor_details/vendor_details.page.dart';
+
 class PopularServicesViewModel extends MyBaseViewModel {
   //
   ServiceRequest _serviceRequest = ServiceRequest();
   //
   List<Service> services = [];
+  List<Vendor> vendors = [];
+  VendorRequest vendorRequest = VendorRequest();
+
   VendorType? vendorType;
 
   PopularServicesViewModel(BuildContext context, this.vendorType) {
@@ -21,6 +28,7 @@ class PopularServicesViewModel extends MyBaseViewModel {
   //
   initialise() async {
     setBusy(true);
+    getVendors();
     try {
       services = await _serviceRequest.getServices(
         byLocation: AppStrings.enableFatchByLocation,
@@ -42,4 +50,30 @@ class PopularServicesViewModel extends MyBaseViewModel {
       (context) => ServiceDetailsPage(service),
     );
   }
+
+  //
+  getVendors() async {
+    //
+    setBusyForObject(vendors, true);
+    try {
+      vendors = await vendorRequest.nearbyVendorsRequest(
+        params: {
+          "vendor_type_id": vendorType?.id,
+        },
+      );
+    } catch (error) {
+      print("Error ==> $error");
+    }
+    setBusyForObject(vendors, false);
+  }
+
+  //
+  openVendorDetails(Vendor vendor) {
+    viewContext.push(
+          (context) => VendorDetailsPage(
+        vendor: vendor,
+      ),
+    );
+  }
+
 }

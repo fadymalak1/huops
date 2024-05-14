@@ -55,12 +55,12 @@ class ServiceBookingSummaryPage extends StatelessWidget {
                       //service logo
                       CustomImage(
                         imageUrl: (vm.service!.photos != null &&
-                                vm.service!.photos!.isNotEmpty)
+                            vm.service!.photos!.isNotEmpty)
                             ? (vm.service!.photos?.first ?? "")
                             : '',
                         width: context.percentWidth * 18,
                         height: 80,
-                      ),
+                      ).box.clip(Clip.antiAlias).withRounded(value: 15.0).make(),
                       //service details
                       VStack(
                         [
@@ -77,12 +77,12 @@ class ServiceBookingSummaryPage extends StatelessWidget {
                             [
                               "${vm.service!.duration.capitalize().tr()}:"
                                   .text
-                                  // .sm
+                              // .sm
                                   .make(),
                               //
                               "${vm.service!.selectedQty}"
                                   .text
-                                  // .sm
+                              // .sm
                                   .bold
                                   .make(),
                             ],
@@ -91,7 +91,7 @@ class ServiceBookingSummaryPage extends StatelessWidget {
                         ],
                       ).px12().expand(),
                     ],
-                  ),
+                  ).p8(),
                   //selected options if any
                   if (vm.service!.selectedOptions.isNotEmpty) ...[
                     20.heightBox,

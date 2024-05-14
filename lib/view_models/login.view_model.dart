@@ -322,6 +322,7 @@ class LoginViewModel extends MyBaseViewModel with QrcodeScannerTrait {
         await AuthServices.isAuthenticated();
         SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
         sharedPreferences.setString('user_id',apiResponse.body["user"]['id'].toString());
+        // sharedPreferences.setString('token',apiResponse.body["token"].toString());
         setBusy(false);
         //go to home
         Navigator.of(viewContext).pushNamedAndRemoveUntil(

@@ -1,8 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
+import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:double_back_to_close/toast.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
+import 'package:huops/services/firebase.service.dart';
+import 'package:huops/services/notification.service.dart';
 import 'package:huops/widgets/base.page.withoutNavbar.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -11,6 +17,8 @@ import 'package:http/http.dart' as http;
 
 import '../../../constants/api.dart';
 import '../../../constants/app_colors.dart';
+import '../../../models/notification.dart' as notificationModel;
+import '../../../services/auth.service.dart';
 import '../../../widgets/buttons/custom_button.dart';
 
 
@@ -41,6 +49,8 @@ class ReservationStorageBagsDetails extends StatefulWidget {
 
 class _ReservationStorageBagsDetailsState extends State<ReservationStorageBagsDetails> {
   bool _isLoading = false;
+  List<File> bagsStorageImages = [File('')];
+
   @override
   Widget build(BuildContext context) {
     return BasePageWithoutNavBar(
@@ -51,18 +61,43 @@ class _ReservationStorageBagsDetailsState extends State<ReservationStorageBagsDe
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             // image of bags
-            Container(
-              height: 100,
-              width: 100,
-              decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
-                  image: DecorationImage(
-                image: FileImage(
-                  widget.bagStorageImage,
-                ),
-                fit: BoxFit.fill,
-              )
+            // Container(
+            //   height: 100,
+            //   width: 100,
+            //   decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),
+            //       image: DecorationImage(
+            //     image: FileImage(
+            //       widget.bagStorageImage,
+            //     ),
+            //     fit: BoxFit.fill,
+            //   )
+            //   ),
+            //   child: Text(" "),
+            // ),
+            widget.bagStorageImage.path.isEmpty ? SizedBox() : CarouselSlider(
+              options: CarouselOptions(
+                autoPlayCurve: Curves.easeInOut,
+                clipBehavior: Clip.antiAliasWithSaveLayer,
+                viewportFraction: 1,
+                autoPlay: true,
+                initialPage: 1,
+                height: 160,
+                disableCenter: false,
+                // onPageChanged: (index, reason) {},
               ),
-              child: Text(" "),
+              items: bagsStorageImages.map(
+                    (banner) {
+                  return Image.file(
+                    widget.bagStorageImage,
+                    fit: BoxFit.fill,
+                    width: double.infinity,
+                  )
+                      .box
+                      .roundedSM
+                      .clip(Clip.antiAlias)
+                      .make().p12();
+                },
+              ).toList(),
             ),
             20.heightBox,
             //Description
@@ -160,7 +195,7 @@ class _ReservationStorageBagsDetailsState extends State<ReservationStorageBagsDe
             20.heightBox,
             "Price for ${widget.sizeOfStorageBags} Size".tr().text.xl.white.make(),
             10.heightBox,
-            "\$${widget.typeOfStorage[widget.sizeOfStorageBags]}".tr().text.xl.bold.white.make(),
+            "\$${int.parse(widget.typeOfStorage[widget.sizeOfStorageBags]) * widget.daysOfStorageBags }".tr().text.xl.bold.white.make(),
             10.heightBox,
             "Taxes and fees Free".tr().text.xl.white.make(),
             20.heightBox,
@@ -176,6 +211,7 @@ class _ReservationStorageBagsDetailsState extends State<ReservationStorageBagsDe
                 String urlOfStorageBags = Api.baseUrl+"/user/bag/reservation/$userId/${widget.vendorId}";
                 var request = http.MultipartRequest('POST', Uri.parse(urlOfStorageBags));
                 Map<String,String> headers={
+                  "Authorization": "Bearer ${await AuthServices.getAuthBearerToken()}",
                   "Accept": "multipart/form-data",
                   "Content-type": "multipart/form-data",
                 };
@@ -213,6 +249,29 @@ class _ReservationStorageBagsDetailsState extends State<ReservationStorageBagsDe
                   Toast.show(
                       "Storage Bag Done".tr(),
                       context);
+
+                  AwesomeNotifications().createNotification(
+                    content: NotificationContent(
+                      id: Random().nextInt(100),
+                      channelKey: 'basic_channel',
+                      title: 'Houps',
+                      body: 'Successful storage Bag',
+                    ),
+                  );
+                  notificationModel.NotificationModel newNotification = notificationModel.NotificationModel(
+                    title: "Houps",
+                    body: "Successful storage Bag",
+                    index: 0,
+                  );
+                  // RemoteMessage notificationRemote ;
+                  // notificationRemote = RemoteMessage();
+                  // NotificationService.addNotification(newNotification);
+                  // FirebaseService().saveNewNotification(
+                  //   null,
+                  //   title: "Houps",
+                  //   body: "Successful storage Bag",
+                  // );
+
                 }else{
                   print("##EROOR### in storage bags###${res.statusCode}");
                   Toast.show(

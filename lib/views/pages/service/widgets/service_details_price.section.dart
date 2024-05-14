@@ -32,7 +32,7 @@ class ServiceDetailsPriceSectionView extends StatelessWidget {
                 .medium
                 .color(AppColor.primaryColor)
                 .make(),
-            service.sellPrice
+            (service.sellPrice * int.parse(service.selectedQty.toString()))
                 .currencyValueFormat()
                 .text
                 .semiBold

@@ -55,14 +55,14 @@ class ServiceDetailsBottomSheet extends StatelessWidget {
             color: Colors.white,
           ),
           onPressed: vm.bookService,
-        ).h(35),
+        ).h(50),
       ],
     )
-        .px(12)
-        .py(8)
+        .px(20)
+        .py(8).cornerRadius(15)
         .box
-        .shadowSm
-        .color(context.theme.colorScheme.background)
+        // .shadowSm
+        // .color(context.theme.colorScheme.background)
         .make();
   }
 }

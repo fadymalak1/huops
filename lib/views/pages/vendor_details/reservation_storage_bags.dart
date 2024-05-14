@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dio/dio.dart';
 import 'package:double_back_to_close/toast.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:huops/views/pages/vendor_details/reservation_storage_bags_details.dart';
 import 'package:image_picker/image_picker.dart';
@@ -38,7 +40,7 @@ class _ReservationStoragePageState extends State<ReservationStoragePage> {
 
 
   // List<File>? bagsStorageImages;
-  // List<File> bagsStorageImages = [File('')];
+  List<File> bagsStorageImages = [File('')];
 
   File bagStorageImage = File('');
 
@@ -61,7 +63,14 @@ class _ReservationStoragePageState extends State<ReservationStoragePage> {
                       // bagsStorageImages.length < 3 ? bagsStorageImages.add(File("")) : null;
                     });
                   },
-                  child: Center(child: Text("Select image from your gallery".tr(),style: TextStyle(fontWeight: FontWeight.bold),))),
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(5),
+                        color: AppColor.primaryColor,
+                      ),
+                      child: Center(child: Text("Select image from your gallery".tr(),style: TextStyle(fontWeight: FontWeight.bold),)))),
+              10.heightBox,
               SimpleDialogOption(
                 onPressed: ()async{
                   Navigator.pop(context);
@@ -77,22 +86,29 @@ class _ReservationStoragePageState extends State<ReservationStoragePage> {
                     // bagsStorageImages.length < 6 ? bagsStorageImages.add(File("")) : null;
                   });
                 },
-                child: Center(child: Text("Take image from your camera".tr(),style: TextStyle(fontWeight: FontWeight.bold),)),
+                child: Container(
+                    padding: EdgeInsets.all(10),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: AppColor.primaryColor,
+                    ),
+                    child: Center(child: Text("Take image from your camera".tr(),style: TextStyle(fontWeight: FontWeight.bold),))),
               ),
+              10.heightBox,
               SimpleDialogOption(
                 child: Center(
                     child: Container(
-                        width: MediaQuery.of(context).size.width * .5,
+                        width: MediaQuery.of(context).size.width * .25,
                         padding: const EdgeInsets.all(8),
-                        margin: const EdgeInsets.all(8),
+                        // margin: const EdgeInsets.all(8),//
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
+                          borderRadius: BorderRadius.circular(5),
                           color: Theme.of(context).primaryColor,
                         ),
                         child:  Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.arrow_back,color: Colors.white,size: 20,),
+                            Icon(Icons.arrow_back,color: Colors.white,size: 15,),
                             8.widthBox,
                             Text(
                               "Back".tr(),
@@ -183,7 +199,8 @@ class _ReservationStoragePageState extends State<ReservationStoragePage> {
                             child: Container(
                               height: 30,width: 30,
                               child: Image.asset("assets/icons/days.png",color: AppColor.primaryColor,),
-                            )),
+                            )
+                        ),
                         Expanded(
                           flex: 3,
                           child: WheelSlider.number(
@@ -266,28 +283,57 @@ class _ReservationStoragePageState extends State<ReservationStoragePage> {
                   "Image Of Bag:".tr().text.xl.white.make(),
                   10.heightBox,
                   // bagsStorageImages[0].path.isEmpty ?
-                  bagStorageImage.path.isNotEmpty ? SizedBox() : Container(
+                  bagStorageImage.path.isEmpty ?  Container(
                     padding: EdgeInsets.all(10),
                     decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),color: AppColor.primaryColor),
                     child: "Add Image".text.white.make(),
                   ).onTap(() {
                     bagStorageImage.path.isEmpty ? selectImage(context) : null ;
                     print("###########${bagStorageImage}");
-                  }) ,
-                  10.heightBox,
-                  Container(
-                    height: 100,
-                    width: 100,
-                    decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),image: DecorationImage(
-                      image: FileImage(
-                        bagStorageImage,
-                      ),
-                      fit: BoxFit.fill,
-                    )),
-                    child: Text(" "),
-                  ).onTap(() {
-                    selectImage(context);
-                  }).pOnly(right: 5),
+                  }) :
+                  CarouselSlider(
+                    options: CarouselOptions(
+                      autoPlayCurve: Curves.easeInOut,
+                      clipBehavior: Clip.antiAliasWithSaveLayer,
+                      viewportFraction: 1,
+                      autoPlay: true,
+                      initialPage: 1,
+                      height: 160,
+                      disableCenter: false,
+                      onPageChanged: (index, reason) {
+                        // setState(() {
+                        //   bannerCurrentIndex = index;
+                        // });
+                      },
+                    ),
+                    items: bagsStorageImages.map(
+                          (banner) {
+                        return Image.file(
+                          bagStorageImage,
+                          fit: BoxFit.fill,
+                          width: double.infinity,
+                        )
+                            .onInkTap(() {selectImage(context);})
+                            .box
+                            .roundedSM
+                            .clip(Clip.antiAlias)
+                            .make().p12();
+                      },
+                    ).toList(),
+                  ),
+                  // Container(
+                  //   height: 100,
+                  //   width: 100,
+                  //   decoration: BoxDecoration(borderRadius: BorderRadius.circular(10),image: DecorationImage(
+                  //     image: FileImage(
+                  //       bagStorageImage,
+                  //     ),
+                  //     fit: BoxFit.fill,
+                  //   )),
+                  //   child: Text(" "),
+                  // ).onTap(() {
+                  //   selectImage(context);
+                  // }).pOnly(right: 5),
                   // confirm storage bags
                   SizedBox(height: 30,),
                   CustomButton(

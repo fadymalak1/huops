@@ -5,14 +5,21 @@ import 'package:huops/constants/app_colors.dart';
 import 'package:huops/models/vendor.dart';
 import 'package:huops/view_models/service_vendor_details.vm.dart';
 import 'package:huops/view_models/vendor_details.vm.dart';
+import 'package:huops/views/pages/vendor_details/panorama_viewer.dart';
 import 'package:huops/views/pages/vendor_details/widgets/vendor_details_header.view.dart';
 import 'package:huops/widgets/custom_masonry_grid_view.dart';
 import 'package:huops/widgets/list_items/grid_view_service.list_item.dart';
 import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:stacked/stacked.dart';
+import 'package:swipe_image_gallery/swipe_image_gallery.dart';
 import 'package:velocity_x/velocity_x.dart';
 
+import '../../../models/vendor_images.dart';
+import '../../../utils/ui_spacer.dart';
+import '../../../widgets/busy_indicator.dart';
 import '../../../widgets/cards/custom.visibility.dart';
+import '../../../widgets/custom_list_view.dart';
+import '../../../widgets/list_items/horizontal_product.list_item.dart';
 
 class ServiceVendorDetailsPage extends StatelessWidget {
   ServiceVendorDetailsPage(
@@ -23,6 +30,7 @@ class ServiceVendorDetailsPage extends StatelessWidget {
 
   final Vendor vendor;
   final VendorDetailsViewModel vendorDetailsViewModel;
+
 
   @override
   Widget build(BuildContext context) {
@@ -112,11 +120,16 @@ class ServiceVendorDetailsPage extends StatelessWidget {
               ),
             ),
 
-            // image 360
-            model.vendorImages.panorama!=null?
-            Column(
+            // images & image 360
+            model.vendorImages.panorama!=null?Column(
                 children: [
-                  ClipRRect(
+                  GestureDetector(
+                    onTap:(){
+                      Navigator.push(
+                          context,MaterialPageRoute(builder: (context) => Panorama360( panorama: model.vendorImages.panorama??Panorama(),),)
+                      );
+                    },
+                    child: ClipRRect(
                       borderRadius: BorderRadius.circular(12),
                       child: Stack(
                         fit: StackFit.loose,
@@ -125,21 +138,36 @@ class ServiceVendorDetailsPage extends StatelessWidget {
                           Image.network("${model.vendorImages.panorama!.panorama}",fit: BoxFit.cover,).hFull(context),
                           Image.asset("assets/images/360.png",width: 50,  opacity: const AlwaysStoppedAnimation(.5),),
                         ],
-                      )).expand(),
+                      ),),
+                  ).expand(),
                   SizedBox(height: 10,),
                   SizedBox(
                     height:100,
                     child: ListView.separated(
                       scrollDirection: Axis.horizontal,
-                      itemBuilder:(context, index) => ClipRRect(
-                          borderRadius: BorderRadius.circular(12),
-                          child: Image.network("${model.vendorImages.images![index].image}",width: 100,fit: BoxFit.cover,)),
+                      itemBuilder:(context, index) => GestureDetector(
+                        onTap: (){
+                          SwipeImageGallery(
+                            context: context,
+                            itemBuilder: (context, index) {
+                              return Image.network("${model.vendorImages.images![index].image}");
+                            },
+                            itemCount:model.vendorImages.images!.length,
+                          ).show();
+                        },
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(12),
+                            child: Image.network("${model.vendorImages.images![index].image}",width: 100,fit: BoxFit.cover,)),
+                      ),
                       separatorBuilder: (context, index) => SizedBox(width: 10,),
                       itemCount: model.vendorImages.images!.length,
                     ),
                   ),
                 ]
             ).wh24(context).p12().wFourFifth(context).glassMorphic(opacity: 0.1):SizedBox(),
+
+
+
 
             model.vendor?.vendorTypeId != 13 ? SizedBox() :
             Container(
@@ -169,6 +197,7 @@ class ServiceVendorDetailsPage extends StatelessWidget {
               crossAxisSpacing: 10,
               mainAxisSpacing: 20,
               childAspectRatio: 1.1,
+              crossAxisCount: 2,
               items: model.services
                   .map(
                     (service) => GridViewServiceListItem(
@@ -182,5 +211,29 @@ class ServiceVendorDetailsPage extends StatelessWidget {
         ).scrollVertical().expand();
       },
     );
+  }
+}
+
+class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
+  _SliverAppBarDelegate(this._tabBar);
+
+  final TabBar _tabBar;
+
+  @override
+  double get minExtent => _tabBar.preferredSize.height;
+
+  @override
+  double get maxExtent => _tabBar.preferredSize.height;
+
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return Container(
+      child: _tabBar,
+    ).glassMorphic().px24();
+  }
+
+  @override
+  bool shouldRebuild(_SliverAppBarDelegate oldDelegate) {
+    return true;
   }
 }

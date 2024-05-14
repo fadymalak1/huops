@@ -27,10 +27,13 @@ class TopVendorsViewModel extends MyBaseViewModel {
 
   int selectedType = 1;
   final bool enableFilter;
+  VendorRequest _vendorRequest = VendorRequest();
+
 
   //fav
   FavouriteRequest favouriteRequest = FavouriteRequest();
   bool isFav=false;
+
   getFavStatus(Vendor? vendor)async{
     isFav=await _vendorRequest.getFavStatus(vendor!.id);
     notifyListeners();
@@ -41,6 +44,7 @@ class TopVendorsViewModel extends MyBaseViewModel {
     notifyListeners();
     return result;
   }
+
   processRemoveVendor(Vendor? vendor, context) async {
     setBusy(true);
     //
@@ -51,13 +55,13 @@ class TopVendorsViewModel extends MyBaseViewModel {
   }
 
   //
-  VendorRequest _vendorRequest = VendorRequest();
 
   //
   initialise() {
     //
     fetchVendorsStorageBags();
     fetchTopVendors();
+    getFavStatus(vendor);
   }
 
   //

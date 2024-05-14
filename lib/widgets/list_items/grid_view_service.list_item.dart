@@ -63,7 +63,7 @@ class GridViewServiceListItem extends StatelessWidget {
 
         UiSpacer.verticalSpace(space: 10),
         //name/title
-        service.name.text.sm.medium.make().px12(),
+        service.name.text.medium.bold.make().px12(),
         //description and price
         HStack(
           [
@@ -102,7 +102,7 @@ class GridViewServiceListItem extends StatelessWidget {
     )
         .box
         .withRounded(value: 10)
-        .color(context.cardColor)
+        .color(Colors.white30)
         .outerShadow
         .clip(Clip.antiAlias)
         .makeCentered()
