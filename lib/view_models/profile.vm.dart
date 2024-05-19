@@ -9,6 +9,7 @@ import 'package:huops/view_models/payment.view_model.dart';
 import 'package:huops/views/pages/loyalty/loyalty_point.page.dart';
 import 'package:huops/views/pages/profile/account_delete.page.dart';
 import 'package:huops/views/pages/profile/contact_us.page.dart';
+import 'package:huops/views/pages/reservations/reservations.dart';
 import 'package:huops/views/pages/splash.page.dart';
 import 'package:huops/constants/api.dart';
 import 'package:huops/constants/app_routes.dart';
@@ -199,6 +200,14 @@ class ProfileViewModel extends PaymentViewModel {
       inAppReview.requestReview();
     } else {
       inAppReview.openStoreListing(appStoreId: AppStrings.appStoreId);
+    }
+  }
+
+  openReservations() {
+    if(isAuthenticated()){
+      Navigator.of(viewContext).push(MaterialPageRoute(builder: (context) => Reservations(),));
+    }else{
+      openLogin();
     }
   }
 

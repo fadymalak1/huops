@@ -62,13 +62,13 @@ class _VendorPlainDetailsViewState extends State<VendorPlainDetailsView> {
       body: VStack(
         [
 //           //subcategories && hide for service vendor type
-//           CustomVisibilty(
-//             visible: (widget.model.vendor!.hasSubcategories &&
-//                 !widget.model.vendor!.isServiceType),
-//             child: VendorDetailsWithSubcategoryPage(
-//               vendor: widget.model.vendor!,
-//             ),
-//           ),
+          CustomVisibilty(
+            visible: (widget.model.vendor!.hasSubcategories &&
+                !widget.model.vendor!.isServiceType),
+            child: VendorDetailsWithSubcategoryPage(
+              vendor: widget.model.vendor!,
+            ),
+          ),
 
           //show for service vendor type
           CustomVisibilty(

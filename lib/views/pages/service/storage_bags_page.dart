@@ -95,11 +95,8 @@ class _StorageBagsPageState extends State<StorageBagsPage>
                         ],
                       ).px16().py4()
                           .box
-                          .color(AppColor.primaryColor)
-                          .roundedSM
-                          .outerShadowSm
-                          .make()
-                          .onInkTap(() {model.openSearch(showType: 5);})
+                          .make().glassMorphic(opacity: 0.1)
+                          .onTap(() {model.openSearch(showType: 5);})
                           .px20().positioned(
                         left: 20,
                         right: 20,

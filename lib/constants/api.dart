@@ -14,6 +14,7 @@ class Api {
   static const tokenSync = "/device/token/sync";
   static const login = "/login";
   static const qrlogin = "/login/qrcode";
+
   static const register = "/register";
   static const logout = "/logout";
   static const forgotPassword = "/password/reset/init";
@@ -43,6 +44,7 @@ class Api {
   static const tags = "/tags";
   static const searchData = "/search/data";
   static const favourites = "/favourites";
+  static const favouritesService = "/favourite/service";
   static const favourite = "/favourite";
   static const favouritesVendorPost = "/favourites/vendor";
   static const favouritesVendorGet = "/favourites/vendor";
@@ -115,6 +117,8 @@ class Api {
   static const getTableReservation = "/table_reservations";
   static const upadteTableReservation = "/table_reservations/update";
   static const getUserReservations="/user/reservations";
+  static const getUserHotelReservations="/user/hotel/reservations";
+  static const getUserBagReservations="/user/bag/reservations";
 
 
   // Other pages

@@ -71,191 +71,307 @@ class _VendorDetailsWithMenuPageState extends State<VendorDetailsWithMenuPage>
           body: Column(
             children: [
               VendorDetailsHeader(model),
-              Expanded(
-                child: CustomScrollView(
-                  slivers: <Widget>[
-                    SliverAppBar(
-                      floating: true,
-                      toolbarHeight: 0,
-                      pinned: false,
-                      primary: true,
-                      snap: false,
-                      elevation: 0,
-                      automaticallyImplyLeading: false,
-                      backgroundColor: Colors.transparent,
-                      expandedHeight: model.vendorImages.panorama!=null?MediaQuery.of(context).size.height*0.36:MediaQuery.of(context).size.height*0.10,
-                      flexibleSpace: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            Container(
-                              height: 1,
-                              color: Colors.grey.withOpacity(0.5),
-                            ).wTwoThird(context).py12(),
-                            CustomVisibilty(
-                              visible: model.vendor!.description.isNotEmptyAndNotNull,
-                              child: Text(
-                                "${model.vendor!.description}",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                maxLines: 2,
-                                textAlign: TextAlign.center,
-                              ),
-                            ).wTwoThird(context),
+              Column(
+                children: [
+                  Container(
+                    height: 1,
+                    color: Colors.grey.withOpacity(0.5),
+                  ).wTwoThird(context).py12(),
+                  CustomVisibilty(
+                    visible: true,
+                    child: Text(
+                      "${model.vendor!.name}",
+                      style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                    ),
+                  ).wTwoThird(context),
+                  CustomVisibilty(
+                    visible: model.vendor!.description.isNotEmptyAndNotNull,
+                    child: Text(
+                      "${model.vendor!.description}",
+                      style: TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                    ),
+                  ).wTwoThird(context),
 
-                            CustomVisibilty(
-                              visible: model.vendor!.address.isNotEmptyAndNotNull,
-                              child: Text(
-                                "${model.vendor!.address}",
-                                style: TextStyle(
-                                  fontSize: 12,
-                                  overflow: TextOverflow.ellipsis,
-                                ),
-                                maxLines: 2,
-                                textAlign: TextAlign.center,
-                              ),
-                            ).wTwoThird(context),
-                            RatingBar(
-                              itemSize: 14,
-                              initialRating: model.vendor!.rating.toDouble(),
-                              ignoreGestures: true,
-                              ratingWidget: RatingWidget(
-                                full: Icon(
-                                  FlutterIcons.ios_star_ion,
-                                  size: 12,
-                                  color: Colors.yellow[800],
-                                ),
-                                half: Icon(
-                                  FlutterIcons.ios_star_half_ion,
-                                  size: 12,
-                                  color: Colors.yellow[800],
-                                ),
-                                empty: Icon(
-                                  FlutterIcons.ios_star_ion,
-                                  size: 12,
-                                  color: Colors.grey.shade400,
-                                ),
-                              ),
-                              onRatingUpdate: (value) {},
-                            ).pOnly(right: 2),
-                            SizedBox(height: 15,),
-                            model.vendorImages.panorama!=null?Column(
-                                children: [
-                                  GestureDetector(
-                                    onTap:(){
-                                      Navigator.push(
-                                        context,MaterialPageRoute(builder: (context) => Panorama360( panorama: model.vendorImages.panorama??Panorama(),),)
-                                      );
-                                    },
-                                    child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(12),
-                                        child: Stack(
-                                          fit: StackFit.loose,
-                                          alignment: Alignment.center,
-                                          children: [
-                                            Image.network("${model.vendorImages.panorama!.panorama}",fit: BoxFit.cover,).hFull(context),
-                                            Image.asset("assets/images/360.png",width: 50,  opacity: const AlwaysStoppedAnimation(.5),),
-                                          ],
-                                        ),),
-                                  ).expand(),
-                                  SizedBox(height: 10,),
-                                  SizedBox(
-                                    height:100,
-                                    child: ListView.separated(
-                                      scrollDirection: Axis.horizontal,
-                                      itemBuilder:(context, index) => GestureDetector(
-                                        onTap: (){
-                                          SwipeImageGallery(
-                                            context: context,
-                                            itemBuilder: (context, index) {
-                                              return Image.network("${model.vendorImages.images![index].image}");
-                                            },
-                                            itemCount:model.vendorImages.images!.length,
-                                          ).show();
-                                        },
-                                        child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(12),
-                                            child: Image.network("${model.vendorImages.images![index].image}",width: 100,fit: BoxFit.cover,)),
-                                      ),
-                                      separatorBuilder: (context, index) => SizedBox(width: 10,),
-                                      itemCount: model.vendorImages.images!.length,
-                                    ),
-                                  ),
-                                ]
-                            ).wh24(context).p12().wFourFifth(context).glassMorphic(opacity: 0.1):SizedBox(),
-                            //menu
-                          ],
-                        ),
+                  CustomVisibilty(
+                    visible: model.vendor!.address.isNotEmptyAndNotNull,
+                    child: Text(
+                      "${model.vendor!.address}",
+                      style: TextStyle(
+                        fontSize: 12,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      maxLines: 2,
+                      textAlign: TextAlign.center,
+                    ),
+                  ).wTwoThird(context),
+                  RatingBar(
+                    itemSize: 14,
+                    initialRating: model.vendor!.rating.toDouble(),
+                    ignoreGestures: true,
+                    ratingWidget: RatingWidget(
+                      full: Icon(
+                        FlutterIcons.ios_star_ion,
+                        size: 12,
+                        color: Colors.yellow[800],
+                      ),
+                      half: Icon(
+                        FlutterIcons.ios_star_half_ion,
+                        size: 12,
+                        color: Colors.yellow[800],
+                      ),
+                      empty: Icon(
+                        FlutterIcons.ios_star_ion,
+                        size: 12,
+                        color: Colors.grey.shade400,
                       ),
                     ),
-                
-                    SliverPersistentHeader(
-                      delegate: _SliverAppBarDelegate(
-                        TabBar(
-                          indicator: BoxDecoration(
+                    onRatingUpdate: (value) {},
+                  ).pOnly(right: 2),
+                  SizedBox(height: 15,),
+                  !model.isBusy?model.vendorImages.panorama!=null?Column(
+                      children: [
+                        GestureDetector(
+                          onTap:(){
+                            Navigator.push(
+                                context,MaterialPageRoute(builder: (context) => Panorama360( panorama: model.vendorImages.panorama??Panorama(),),)
+                            );
+                          },
+                          child: ClipRRect(
                             borderRadius: BorderRadius.circular(12),
-                            color: AppColor.primaryColor,
+                            child: Stack(
+                              fit: StackFit.loose,
+                              alignment: Alignment.center,
+                              children: [
+                                Image.network("${model.vendorImages.panorama!.panorama}",fit: BoxFit.cover,).hFull(context),
+                                Image.asset("assets/images/360.png",width: 50,  opacity: const AlwaysStoppedAnimation(.5),),
+                              ],
+                            ),),
+                        ).expand(),
+                        SizedBox(height: 10,),
+                        SizedBox(
+                          height:100,
+                          child: ListView.separated(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder:(context, index) => GestureDetector(
+                              onTap: (){
+                                SwipeImageGallery(
+                                  context: context,
+                                  itemBuilder: (context, index) {
+                                    return Image.network("${model.vendorImages.images![index].image}");
+                                  },
+                                  itemCount:model.vendorImages.images!.length,
+                                ).show();
+                              },
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: Image.network("${model.vendorImages.images![index].image}",width: 100,fit: BoxFit.cover,)),
+                            ),
+                            separatorBuilder: (context, index) => SizedBox(width: 10,),
+                            itemCount: model.vendorImages.images!.length,
                           ),
-                          controller: model.tabBarController,
-                          tabs: model.vendor!.menus.map(
-                                (menu) {
-                              return Tab(
-                                text: menu.name,
-                              );
-                            },
-                          ).toList(),
                         ),
-                      ),
-                      pinned: true, // Keep the tab bar pinned at the top
-                    ),
-                    SliverFillRemaining(
-                      child:Container(
-                        height: MediaQuery.of(context).size.height,
-                        child: model.isBusy
-                            ? BusyIndicator().p20().centered()
-                            : TabBarView(
-                          controller: model.tabBarController,
-                          children: model.vendor!.menus.map(
-                                (menu) {
-                              return  CustomListView(
-                                noScrollPhysics: false,
-                                refreshController:
-                                model.getRefreshController(menu.id),
-                                canPullUp: true,
-                                canRefresh: true,
-                                dataSet: model.menuProducts[menu.id] ?? [],
-                                isLoading: model.busy(menu.id),
-                                onLoading: () => model.loadMoreProducts(
-                                  menu.id,
-                                  initialLoad: false,
-                                ),
-                                onRefresh: () =>
-                                    model.loadMoreProducts(menu.id),
-                                itemBuilder: (context, index) {
-                                  final product =
-                                  model.menuProducts[menu.id]?[index];
-                                  return HorizontalProductListItem(
-                                    product,
-                                    onPressed: model.productSelected,
-                                    qtyUpdated: model.addToCartDirectly,
-                                  ).px20();
-                                },
-                                separatorBuilder: (context, index) =>
-                                    UiSpacer.verticalSpace(space: 0),
-                              );
-                            },
-                          ).toList(),
-                          physics: BouncingScrollPhysics(),
-                        ),
-                      ),
-                    ),
-                
-                
-                  ],
-                ),
+                      ]
+                  ).wh24(context).p12().wFourFifth(context).glassMorphic(opacity: 0.1):SizedBox():Center(child: LoadingShimmer(),).wh24(context).p12().wFourFifth(context),
+                  //menu
+                ],
               ),
+              // Expanded(
+              //   child: CustomScrollView(
+              //     slivers: <Widget>[
+              //       // SliverAppBar(
+              //       //   floating: true,
+              //       //   toolbarHeight: 0,
+              //       //   pinned: false,
+              //       //   primary: true,
+              //       //   snap: false,
+              //       //   elevation: 0,
+              //       //   automaticallyImplyLeading: false,
+              //       //   backgroundColor: Colors.transparent,
+              //       //   expandedHeight: model.vendorImages.panorama!=null?MediaQuery.of(context).size.height*0.36:MediaQuery.of(context).size.height*0.10,
+              //       //   flexibleSpace: SingleChildScrollView(
+              //       //     child: Column(
+              //       //       children: [
+              //       //         Container(
+              //       //           height: 1,
+              //       //           color: Colors.grey.withOpacity(0.5),
+              //       //         ).wTwoThird(context).py12(),
+              //       //         CustomVisibilty(
+              //       //           visible: model.vendor!.description.isNotEmptyAndNotNull,
+              //       //           child: Text(
+              //       //             "${model.vendor!.description}",
+              //       //             style: TextStyle(
+              //       //               fontSize: 15,
+              //       //               fontWeight: FontWeight.bold,
+              //       //               overflow: TextOverflow.ellipsis,
+              //       //             ),
+              //       //             maxLines: 2,
+              //       //             textAlign: TextAlign.center,
+              //       //           ),
+              //       //         ).wTwoThird(context),
+              //       //
+              //       //         CustomVisibilty(
+              //       //           visible: model.vendor!.address.isNotEmptyAndNotNull,
+              //       //           child: Text(
+              //       //             "${model.vendor!.address}",
+              //       //             style: TextStyle(
+              //       //               fontSize: 12,
+              //       //               overflow: TextOverflow.ellipsis,
+              //       //             ),
+              //       //             maxLines: 2,
+              //       //             textAlign: TextAlign.center,
+              //       //           ),
+              //       //         ).wTwoThird(context),
+              //       //         RatingBar(
+              //       //           itemSize: 14,
+              //       //           initialRating: model.vendor!.rating.toDouble(),
+              //       //           ignoreGestures: true,
+              //       //           ratingWidget: RatingWidget(
+              //       //             full: Icon(
+              //       //               FlutterIcons.ios_star_ion,
+              //       //               size: 12,
+              //       //               color: Colors.yellow[800],
+              //       //             ),
+              //       //             half: Icon(
+              //       //               FlutterIcons.ios_star_half_ion,
+              //       //               size: 12,
+              //       //               color: Colors.yellow[800],
+              //       //             ),
+              //       //             empty: Icon(
+              //       //               FlutterIcons.ios_star_ion,
+              //       //               size: 12,
+              //       //               color: Colors.grey.shade400,
+              //       //             ),
+              //       //           ),
+              //       //           onRatingUpdate: (value) {},
+              //       //         ).pOnly(right: 2),
+              //       //         SizedBox(height: 15,),
+              //       //         model.vendorImages.panorama!=null?Column(
+              //       //             children: [
+              //       //               GestureDetector(
+              //       //                 onTap:(){
+              //       //                   Navigator.push(
+              //       //                     context,MaterialPageRoute(builder: (context) => Panorama360( panorama: model.vendorImages.panorama??Panorama(),),)
+              //       //                   );
+              //       //                 },
+              //       //                 child: ClipRRect(
+              //       //                     borderRadius: BorderRadius.circular(12),
+              //       //                     child: Stack(
+              //       //                       fit: StackFit.loose,
+              //       //                       alignment: Alignment.center,
+              //       //                       children: [
+              //       //                         Image.network("${model.vendorImages.panorama!.panorama}",fit: BoxFit.cover,).hFull(context),
+              //       //                         Image.asset("assets/images/360.png",width: 50,  opacity: const AlwaysStoppedAnimation(.5),),
+              //       //                       ],
+              //       //                     ),),
+              //       //               ).expand(),
+              //       //               SizedBox(height: 10,),
+              //       //               SizedBox(
+              //       //                 height:100,
+              //       //                 child: ListView.separated(
+              //       //                   scrollDirection: Axis.horizontal,
+              //       //                   itemBuilder:(context, index) => GestureDetector(
+              //       //                     onTap: (){
+              //       //                       SwipeImageGallery(
+              //       //                         context: context,
+              //       //                         itemBuilder: (context, index) {
+              //       //                           return Image.network("${model.vendorImages.images![index].image}");
+              //       //                         },
+              //       //                         itemCount:model.vendorImages.images!.length,
+              //       //                       ).show();
+              //       //                     },
+              //       //                     child: ClipRRect(
+              //       //                         borderRadius: BorderRadius.circular(12),
+              //       //                         child: Image.network("${model.vendorImages.images![index].image}",width: 100,fit: BoxFit.cover,)),
+              //       //                   ),
+              //       //                   separatorBuilder: (context, index) => SizedBox(width: 10,),
+              //       //                   itemCount: model.vendorImages.images!.length,
+              //       //                 ),
+              //       //               ),
+              //       //             ]
+              //       //         ).wh24(context).p12().wFourFifth(context).glassMorphic(opacity: 0.1):SizedBox(),
+              //       //         //menu
+              //       //       ],
+              //       //     ),
+              //       //   ),
+              //       // ),
+              //
+              //       SliverPersistentHeader(
+              //         delegate: _SliverAppBarDelegate(
+              //           TabBar(
+              //             indicator: BoxDecoration(
+              //               borderRadius: BorderRadius.circular(12),
+              //               color: AppColor.primaryColor,
+              //             ),
+              //             controller: model.tabBarController,
+              //             tabs: model.vendor!.menus.map(
+              //                   (menu) {
+              //                 return Tab(
+              //                   text: menu.name,
+              //                 );
+              //               },
+              //             ).toList(),
+              //           ),
+              //         ),
+              //         pinned: true, // Keep the tab bar pinned at the top
+              //       ),
+              //       SliverFillRemaining(
+              //         child:Container(
+              //           height: MediaQuery.of(context).size.height,
+              //           child: model.isBusy
+              //               ? BusyIndicator().p20().centered()
+              //               : TabBarView(
+              //             controller: model.tabBarController,
+              //             children: model.vendor!.menus.map(
+              //                   (menu) {
+              //                 return  CustomListView(
+              //                   noScrollPhysics: false,
+              //                   refreshController:
+              //                   model.getRefreshController(menu.id),
+              //                   canPullUp: true,
+              //                   canRefresh: true,
+              //                   dataSet: model.menuProducts[menu.id] ?? [],
+              //                   isLoading: model.busy(menu.id),
+              //                   onLoading: () => model.loadMoreProducts(
+              //                     menu.id,
+              //                     initialLoad: false,
+              //                   ),
+              //                   onRefresh: () =>
+              //                       model.loadMoreProducts(menu.id),
+              //                   itemBuilder: (context, index) {
+              //                     final product =
+              //                     model.menuProducts[menu.id]?[index];
+              //                     return HorizontalProductListItem(
+              //                       product,
+              //                       onPressed: model.productSelected,
+              //                       qtyUpdated: model.addToCartDirectly,
+              //                     ).px20();
+              //                   },
+              //                   separatorBuilder: (context, index) =>
+              //                       UiSpacer.verticalSpace(space: 0),
+              //                 );
+              //               },
+              //             ).toList(),
+              //             physics: BouncingScrollPhysics(),
+              //           ),
+              //         ),
+              //       ),
+              //
+              //
+              //     ],
+              //   ),
+              // ),
             ],
           ),
         );

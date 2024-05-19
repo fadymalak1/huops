@@ -10,10 +10,10 @@ import 'package:huops/widgets/states/loading.shimmer.dart';
 import 'package:stacked/stacked.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-class ReservationDetails extends StatelessWidget {
+class TableReservationDetails extends StatelessWidget {
   final Map<String, dynamic> reservation;
 
-  const ReservationDetails({super.key, required this.reservation});
+  const TableReservationDetails({super.key, required this.reservation});
 
   @override
   Widget build(BuildContext context) {
@@ -159,15 +159,16 @@ class ReservationDetails extends StatelessWidget {
                     ),
                   ),
 
-                  vm.isBusy?LoadingShimmer():Padding(
+                  reservation["reservation_data"]["status"] == "Cancelled"?SizedBox():reservation["reservation_data"]["status"] == "Rejected"&&reservation["reservation_data"]["reason"]!=null?reservation["reservation_data"]["reason"].toString().text.xl.make().p8().glassMorphic().wFull(context).px20():vm.isBusy?LoadingShimmer():Padding(
                     padding: const EdgeInsets.all(15.0),
                     child: CustomButton(
                       shapeRadius: 12,
                       color: Colors.red,
                       title: "Cancel Reservation",
-                      onPressed:vm.cancelReservation,
+                      onPressed:vm.cancelTableReservation,
                     ),
                   ),
+
 
 
                 ]

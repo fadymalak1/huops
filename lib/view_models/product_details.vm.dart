@@ -150,7 +150,7 @@ class ProductDetailsViewModel extends MyBaseViewModel {
 
     try {
       //
-      final apiResponse = await _favouriteRequest.makeFavourite(product.id);
+      final apiResponse = await _favouriteRequest.makeFavouriteProduct(product.id);
       if (apiResponse.allGood) {
         //
         product.isFavourite = true;
@@ -177,7 +177,7 @@ class ProductDetailsViewModel extends MyBaseViewModel {
 
     try {
       //
-      final apiResponse = await _favouriteRequest.removeFavourite(product.id);
+      final apiResponse = await _favouriteRequest.removeFavouriteProduct(product.id);
       if (apiResponse.allGood) {
         //
         product.isFavourite = false;

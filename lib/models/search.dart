@@ -10,7 +10,7 @@ class Search {
   int? vendorId;
   int? showType;
   SearchType? viewType;
-  bool? byLocation = true;
+  bool? byLocation = false;
   bool? showProductsTag = false;
   bool? showVendorsTag = false;
   bool? showServicesTag = false;

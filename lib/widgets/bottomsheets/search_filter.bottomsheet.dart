@@ -42,26 +42,26 @@ class SearchFilterBottomSheet extends StatelessWidget {
                 : VStack(
                     [
                       //Layout type
-                      "Layout Type".tr().text.semiBold.lg.make(),
-                      FormBuilderRadioGroup(
-                        name: "view_type",
-                        decoration: InputDecoration(border: InputBorder.none),
-                        initialValue: search?.layoutType ?? "grid",
-                        options: [
-                          FormBuilderFieldOption(
-                            value: "grid",
-                            child: "GridView".tr().text.make(),
-                          ),
-                          FormBuilderFieldOption(
-                            value: "list",
-                            child: "ListView".tr().text.make(),
-                          )
-                        ],
-                        onChanged: (String? value) {
-                          search?.layoutType = value;
-                        },
-                      ),
-                      UiSpacer.divider().py(6),
+                      // "Layout Type".tr().text.semiBold.lg.make(),
+                      // FormBuilderRadioGroup(
+                      //   name: "view_type",
+                      //   decoration: InputDecoration(border: InputBorder.none),
+                      //   initialValue: search?.layoutType ?? "grid",
+                      //   options: [
+                      //     FormBuilderFieldOption(
+                      //       value: "grid",
+                      //       child: "GridView".tr().text.make(),
+                      //     ),
+                      //     FormBuilderFieldOption(
+                      //       value: "list",
+                      //       child: "ListView".tr().text.make(),
+                      //     )
+                      //   ],
+                      //   onChanged: (String? value) {
+                      //     search?.layoutType = value;
+                      //   },
+                      // ),
+                      // UiSpacer.divider().py(6),
                       //sort
                       "Sort by".tr().text.semiBold.lg.make(),
                       FormBuilderRadioGroup(
@@ -172,8 +172,7 @@ class SearchFilterBottomSheet extends StatelessWidget {
             .scrollVertical()
             .box
             .topRounded()
-            .color(context.theme.colorScheme.background)
-            .make();
+            .make().glassMorphic(opacity: 0.1,borderRadius: BorderRadius.only(topRight: Radius.circular(20),topLeft: Radius.circular(20)));
         // .h(context.percentHeight * 90);
       },
     );

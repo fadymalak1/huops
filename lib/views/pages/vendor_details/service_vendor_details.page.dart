@@ -5,6 +5,7 @@ import 'package:huops/constants/app_colors.dart';
 import 'package:huops/models/vendor.dart';
 import 'package:huops/view_models/service_vendor_details.vm.dart';
 import 'package:huops/view_models/vendor_details.vm.dart';
+import 'package:huops/views/pages/auth/login.page.dart';
 import 'package:huops/views/pages/vendor_details/panorama_viewer.dart';
 import 'package:huops/views/pages/vendor_details/widgets/vendor_details_header.view.dart';
 import 'package:huops/widgets/custom_masonry_grid_view.dart';
@@ -31,17 +32,17 @@ class ServiceVendorDetailsPage extends StatelessWidget {
   final Vendor vendor;
   final VendorDetailsViewModel vendorDetailsViewModel;
 
-
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<ServiceVendorDetailsViewModel>.reactive(
-      viewModelBuilder: () => ServiceVendorDetailsViewModel(context, vendor),
+      viewModelBuilder: () =>
+          ServiceVendorDetailsViewModel(context, vendor: vendor),
       onViewModelReady: (model) => model.getVendorServices(),
       builder: (context, model, child) {
         return VStack(
           [
             //
-            VendorDetailsHeader(vendorDetailsViewModel,isDelivery: false),
+            VendorDetailsHeader(vendorDetailsViewModel, isDelivery: false),
 
             Container(
               width: MediaQuery.of(context).size.width,
@@ -50,9 +51,9 @@ class ServiceVendorDetailsPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   CustomVisibilty(
-                    visible: model.vendor!.name.isNotEmptyAndNotNull,
+                    visible: model.vendor.name.isNotEmptyAndNotNull,
                     child: Text(
-                      "${model.vendor!.name}",
+                      "${model.vendor.name}",
                       style: TextStyle(
                         fontSize: 15,
                         fontWeight: FontWeight.bold,
@@ -66,7 +67,6 @@ class ServiceVendorDetailsPage extends StatelessWidget {
                     height: 1,
                     color: Colors.grey.withOpacity(0.5),
                   ).wTwoThird(context).py12(),
-
                   CustomVisibilty(
                     visible: model.vendor!.description.isNotEmptyAndNotNull,
                     child: Text(
@@ -80,7 +80,6 @@ class ServiceVendorDetailsPage extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                   ).wTwoThird(context),
-
                   CustomVisibilty(
                     visible: model.vendor!.address.isNotEmptyAndNotNull,
                     child: Text(
@@ -93,120 +92,166 @@ class ServiceVendorDetailsPage extends StatelessWidget {
                       textAlign: TextAlign.center,
                     ),
                   ).wTwoThird(context),
-                  RatingBar(
-                    itemSize: 14,
-                    initialRating: model.vendor!.rating.toDouble(),
-                    ignoreGestures: true,
-                    ratingWidget: RatingWidget(
-                      full: Icon(
-                        FlutterIcons.ios_star_ion,
-                        size: 12,
-                        color: Colors.yellow[800],
-                      ),
-                      half: Icon(
-                        FlutterIcons.ios_star_half_ion,
-                        size: 12,
-                        color: Colors.yellow[800],
-                      ),
-                      empty: Icon(
-                        FlutterIcons.ios_star_ion,
-                        size: 12,
-                        color: Colors.grey.shade400,
-                      ),
-                    ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  VxRating(
+                    maxRating: 5.0,
+                    value: double.parse(vendor.rating.toString()),
+                    isSelectable: false,
                     onRatingUpdate: (value) {},
-                  ).pOnly(right: 2),
+                    selectionColor: AppColor.ratingColor,
+                    size: 15,
+                  ).p4().glassMorphic(),
                 ],
               ),
             ),
 
             // images & image 360
-            model.vendorImages.panorama!=null?Column(
-                children: [
-                  GestureDetector(
-                    onTap:(){
-                      Navigator.push(
-                          context,MaterialPageRoute(builder: (context) => Panorama360( panorama: model.vendorImages.panorama??Panorama(),),)
-                      );
-                    },
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: Stack(
-                        fit: StackFit.loose,
-                        alignment: Alignment.center,
-                        children: [
-                          Image.network("${model.vendorImages.panorama!.panorama}",fit: BoxFit.cover,).hFull(context),
-                          Image.asset("assets/images/360.png",width: 50,  opacity: const AlwaysStoppedAnimation(.5),),
-                        ],
-                      ),),
-                  ).expand(),
-                  SizedBox(height: 10,),
-                  SizedBox(
-                    height:100,
-                    child: ListView.separated(
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder:(context, index) => GestureDetector(
-                        onTap: (){
-                          SwipeImageGallery(
-                            context: context,
-                            itemBuilder: (context, index) {
-                              return Image.network("${model.vendorImages.images![index].image}");
-                            },
-                            itemCount:model.vendorImages.images!.length,
-                          ).show();
-                        },
-                        child: ClipRRect(
-                            borderRadius: BorderRadius.circular(12),
-                            child: Image.network("${model.vendorImages.images![index].image}",width: 100,fit: BoxFit.cover,)),
+            model.vendorImages.panorama != null
+                ? Column(children: [
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => Panorama360(
+                                panorama:
+                                    model.vendorImages.panorama ?? Panorama(),
+                              ),
+                            ));
+                      },
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(12),
+                        child: Stack(
+                          fit: StackFit.loose,
+                          alignment: Alignment.center,
+                          children: [
+                            Image.network(
+                              "${model.vendorImages.panorama!.panorama}",
+                              fit: BoxFit.cover,
+                            ).hFull(context),
+                            Image.asset(
+                              "assets/images/360.png",
+                              width: 50,
+                              opacity: const AlwaysStoppedAnimation(.5),
+                            ),
+                          ],
+                        ),
                       ),
-                      separatorBuilder: (context, index) => SizedBox(width: 10,),
-                      itemCount: model.vendorImages.images!.length,
+                    ).expand(),
+                    SizedBox(
+                      height: 10,
                     ),
-                  ),
-                ]
-            ).wh24(context).p12().wFourFifth(context).glassMorphic(opacity: 0.1):SizedBox(),
+                    SizedBox(
+                      height: 100,
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) => GestureDetector(
+                          onTap: () {
+                            SwipeImageGallery(
+                              context: context,
+                              itemBuilder: (context, index) {
+                                return Image.network(
+                                    "${model.vendorImages.images![index].image}");
+                              },
+                              itemCount: model.vendorImages.images!.length,
+                            ).show();
+                          },
+                          child: ClipRRect(
+                              borderRadius: BorderRadius.circular(12),
+                              child: Image.network(
+                                "${model.vendorImages.images![index].image}",
+                                width: 100,
+                                fit: BoxFit.cover,
+                              )),
+                        ),
+                        separatorBuilder: (context, index) => SizedBox(
+                          width: 10,
+                        ),
+                        itemCount: model.vendorImages.images!.length,
+                      ),
+                    ),
+                  ])
+                    .wh24(context)
+                    .p12()
+                    .wFourFifth(context)
+                    .glassMorphic(opacity: 0.1)
+                : SizedBox(),
 
+            model.vendor.vendorTypeId != 13
+                ? SizedBox()
+                : Container(
+                    padding: EdgeInsets.all(10),
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(10)),
+                    child: "Beauty Center Services"
+                        .tr()
+                        .text
+                        .white
+                        .extraBold
+                        .make(),
+                  )
+                    .glassMorphic(opacity: .1)
+                    .pOnly(right: 20, left: 20, top: 10),
 
+            model.vendor.vendorTypeId == 15 ? 30.heightBox : SizedBox(),
+            model.vendor.vendorTypeId != 15
+                ? SizedBox()
+                : Container(
+                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: AppColor.primaryColor,
+                    ),
+                    child: "Storage Bags Services"
+                        .tr()
+                        .text
+                        .white
+                        .extraBold
+                        .make(),
+                  ).centered().onTap(() {
+                    model.StorageBags(vendor.id);
+                  }),
 
-
-            model.vendor?.vendorTypeId != 13 ? SizedBox() :
-            Container(
-              padding: EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10)
-              ),
-              child: "Beauty Center Services".tr().text.white.extraBold.make(),
-            ).glassMorphic(opacity: .1).pOnly(right: 20,left: 20,top: 10),
-
-            model.vendor?.vendorTypeId == 15 ? 30.heightBox:SizedBox(),
-            model.vendor?.vendorTypeId != 15 ? SizedBox() :
-            Container(
-              padding: EdgeInsets.symmetric(vertical: 15,horizontal: 30),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: AppColor.primaryColor,
-              ),
-              child: "Storage Bags Services".tr().text.white.extraBold.make(),
-            ).centered().onTap(() {
-              model.StorageBags(vendor.id);
-            }),
+            //hotel
+            model.vendor.vendorTypeId == 14 ? 30.heightBox : SizedBox(),
+            model.vendor.vendorTypeId != 14
+                ? SizedBox()
+                : Container(
+                    padding: EdgeInsets.symmetric(vertical: 15, horizontal: 30),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: AppColor.primaryColor,
+                    ),
+                    child: "Hotel Reservation Services"
+                        .tr()
+                        .text
+                        .white
+                        .extraBold
+                        .make(),
+                  ).centered().onTap(() {
+                    model.hotelReservation(vendor.id);
+                  }),
 
             //services of the vendor
-            model.vendor?.vendorTypeId == 15 ? SizedBox() : CustomMasonryGridView(
-              isLoading: model.isBusy,
-              crossAxisSpacing: 10,
-              mainAxisSpacing: 20,
-              childAspectRatio: 1.1,
-              crossAxisCount: 2,
-              items: model.services
-                  .map(
-                    (service) => GridViewServiceListItem(
-                      service: service,
-                      onPressed: model.servicePressed,
-                    ),
-                  )
-                  .toList(),
-            ).p20(),
+            model.vendor.vendorTypeId == 15
+                ? SizedBox()
+                : CustomMasonryGridView(
+                    isLoading: model.isBusy,
+                    crossAxisSpacing: 10,
+                    mainAxisSpacing: 20,
+                    childAspectRatio: 1.1,
+                    crossAxisCount: 2,
+                    items: model.services
+                        .map(
+                          (service) => GridViewServiceListItem(
+                            service: service,
+                            onPressed: model.servicePressed,
+                          ),
+                        )
+                        .toList(),
+                  ).p20(),
           ],
         ).scrollVertical().expand();
       },
@@ -226,7 +271,8 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   double get maxExtent => _tabBar.preferredSize.height;
 
   @override
-  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
     return Container(
       child: _tabBar,
     ).glassMorphic().px24();

@@ -102,11 +102,9 @@ class GridViewServiceListItem extends StatelessWidget {
     )
         .box
         .withRounded(value: 10)
-        .color(Colors.white30)
-        .outerShadow
         .clip(Clip.antiAlias)
-        .makeCentered()
-        .onInkTap(
+        .makeCentered().glassMorphic()
+        .onTap(
           () => this.onPressed(this.service),
         )
         .py4();

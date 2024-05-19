@@ -11,7 +11,7 @@ import 'package:huops/services/auth.service.dart';
 import 'package:huops/services/http.service.dart';
 import 'package:huops/services/location.service.dart';
 import 'package:http/http.dart' as http;
-import 'package:huops/views/pages/favourite/fav_data.dart';
+import 'package:huops/views/pages/favourite/fav_vendor_data.dart';
 
 import '../models/user.dart';
 
@@ -63,17 +63,24 @@ class VendorRequest extends HttpService {
   //
 
   Future<VendorImages>getVendorImages(int vendorId)async{
+    String token=await AuthServices.getAuthBearerToken();
+    log(vendorId.toString());
     final response=await http.get(
-      Uri.parse('http://huopsapp.it/api/panorama/images/$vendorId')
+      Uri.parse('http://huopsapp.it/api/panorama/images/$vendorId'),
     );
-    log(jsonDecode(response.body).toString());
+    log(response.body.toString());
     return VendorImages.fromJson(jsonDecode(response.body));
   }
+
+
   Future<List<FavVendor>>getFavVendors()async{
     User currentUser = await AuthServices.getCurrentUser();
+    String token=await AuthServices.getAuthBearerToken();
 
     final response=await http.get(
-      Uri.parse('http://huopsapp.it/api/favourite/user/${currentUser.id}')
+      Uri.parse('http://huopsapp.it/api/favourite/user/${currentUser.id}'),   headers: {
+    "Authorization": "Bearer $token"
+      }
     );
 
       log(response.body.toString());
@@ -83,9 +90,12 @@ class VendorRequest extends HttpService {
   getFavStatus(int vendorId)async{
     try{
       User currentUser = await AuthServices.getCurrentUser();
+      String token=await AuthServices.getAuthBearerToken();
 
       final response=await http.get(
-        Uri.parse('http://huopsapp.it/api/favourite/user/${currentUser.id}')
+        Uri.parse('http://huopsapp.it/api/favourite/user/${currentUser.id}')  ,   headers: {
+        "Authorization": "Bearer $token"
+        }
       );
 
       bool isVendorIdAvailable=false;
@@ -108,13 +118,17 @@ class VendorRequest extends HttpService {
     Map<String, dynamic> map = Map<String, dynamic>();
 
     try{
+      String token=await AuthServices.getAuthBearerToken();
+
       User currentUser = await AuthServices.getCurrentUser();
       map["date"] = "${date}";
       map["time"] = "${time}";
       map["count_of_people"] = "${cont}";
       map["tables"] = "${countTable}";
       final response=await http.post(
-        Uri.parse('http://huopsapp.it/api/user/reservation/$vendorId/${currentUser.id}'),body: map,
+        Uri.parse('http://huopsapp.it/api/user/reservation/$vendorId/${currentUser.id}'),body: map,   headers: {
+        "Authorization": "Bearer $token"
+        }
       );
 
 
@@ -129,9 +143,12 @@ class VendorRequest extends HttpService {
   Future<bool> addToFav(int vendorId)async{
     try{
       User currentUser = await AuthServices.getCurrentUser();
+      String token=await AuthServices.getAuthBearerToken();
 
       final response=await http.post(
-        Uri.parse('http://huopsapp.it/api/favourite/vendor/${currentUser.id}/$vendorId')
+        Uri.parse('http://huopsapp.it/api/favourite/vendor/${currentUser.id}/$vendorId')  ,   headers: {
+        "Authorization": "Bearer $token"
+        }
       );
 
       return true;

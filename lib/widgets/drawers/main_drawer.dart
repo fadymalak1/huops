@@ -75,6 +75,12 @@ class _ProfilePageState extends State<MainDrawer>
                       ),
                       */
                       //
+                      MenuItem(
+                        title: "Reservations".tr(),
+                        onPressed: model.openReservations,
+                        ic: AppIcons.reservation,
+                      ),
+                      Divider(),
                       ViewModelBuilder<ProfileViewModel>.reactive(
                           viewModelBuilder: () => ProfileViewModel(context),
                           onViewModelReady: (model) => model.initialise(),

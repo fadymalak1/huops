@@ -65,12 +65,11 @@ class _OnboardingPageState extends State<OnboardingPage> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          SizedBox(
-                            height: 480,
-                          ),
+                          Spacer(),
                           Text(e.title??"",style: TextStyle(color: Colors.white,fontWeight: FontWeight.bold,fontSize: 20),),
                           SizedBox(height: 15,),
                           Text(e.description??"",style: TextStyle(color: Colors.white),textAlign: TextAlign.center,),
+                        SizedBox(height: 20,),
                         ],
                       ),
                     ),).toList(),

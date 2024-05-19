@@ -33,11 +33,11 @@ class TopVendorsViewModel extends MyBaseViewModel {
   //fav
   FavouriteRequest favouriteRequest = FavouriteRequest();
   bool isFav=false;
-
-  getFavStatus(Vendor? vendor)async{
-    isFav=await _vendorRequest.getFavStatus(vendor!.id);
-    notifyListeners();
-  }
+  //
+  // getFavStatus(Vendor? vendor)async{
+  //   isFav=await _vendorRequest.getFavStatus(vendor!.id);
+  //   notifyListeners();
+  // }
 
   Future<bool> addToFav(Vendor? vendor)async{
     bool result= await _vendorRequest.addToFav(vendor!.id);
@@ -61,7 +61,7 @@ class TopVendorsViewModel extends MyBaseViewModel {
     //
     fetchVendorsStorageBags();
     fetchTopVendors();
-    getFavStatus(vendor);
+    // getFavStatus(vendor);
   }
 
   //

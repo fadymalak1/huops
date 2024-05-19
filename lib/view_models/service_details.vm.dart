@@ -1,10 +1,16 @@
+import 'dart:developer';
+
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
+import 'package:huops/constants/app_colors.dart';
 import 'package:huops/constants/app_routes.dart';
 import 'package:huops/models/service.dart';
 import 'package:huops/models/service_option.dart';
 import 'package:huops/models/service_option_group.dart';
+import 'package:huops/models/vendor.dart';
+import 'package:huops/requests/favourite.request.dart';
 import 'package:huops/requests/service.request.dart';
+import 'package:huops/requests/vendor.request.dart';
 import 'package:huops/services/alert.service.dart';
 import 'package:huops/services/auth.service.dart';
 import 'package:huops/view_models/base.view_model.dart';
@@ -51,7 +57,7 @@ class ServiceDetailsViewModel extends MyBaseViewModel {
   void getServiceDetails() async {
     //
     setBusyForObject(service, true);
-
+    await getFavStatus();
     try {
       final oldProductHeroTag = service.heroTag;
       service = await serviceRequest.serviceDetails(service.id);
@@ -151,5 +157,29 @@ class ServiceDetailsViewModel extends MyBaseViewModel {
     viewContext.push(
       (context) => ServiceBookingSummaryPage(service),
     );
+  }
+
+  bool isFav=false;
+  FavouriteRequest favouriteRequest = FavouriteRequest();
+
+  addToFav()async{
+    log(service.id.toString());
+    log("isFav before: $isFav");
+    isFav=await favouriteRequest.makeFavouriteService(service.id);
+    log("isFav added: $isFav");
+  }
+
+  processRemoveService(context) async {
+    //
+    isFav = await favouriteRequest.removeFavouriteService(service.id);
+    log("isFav removed: $isFav");
+    notifyListeners();
+  }
+
+  //
+  getFavStatus()async{
+    isFav=await favouriteRequest.getFavServiceStatus(service.id);
+    log("status: $isFav");
+    notifyListeners();
   }
 }

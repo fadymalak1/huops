@@ -17,7 +17,7 @@ class FavouriteViewModel extends MyBaseViewModel {
   removeFavourite() async {
     setBusy(true);
     //
-    final apiResponse = await favouriteRequest.removeFavourite(
+    final apiResponse = await favouriteRequest.removeFavouriteProduct(
       product.id,
     );
 
@@ -35,7 +35,7 @@ class FavouriteViewModel extends MyBaseViewModel {
   addFavourite() async {
     setBusy(true);
     //
-    final apiResponse = await favouriteRequest.makeFavourite(
+    final apiResponse = await favouriteRequest.makeFavouriteProduct(
       product.id,
     );
 

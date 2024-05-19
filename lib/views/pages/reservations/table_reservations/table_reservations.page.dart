@@ -32,7 +32,7 @@ class _TableReservationsState extends State<TableReservations>   with AutomaticK
 
     return ViewModelBuilder<ReservationViewModel>.reactive(
       viewModelBuilder: () => ReservationViewModel(context),
-      onViewModelReady: (vm) => vm.initialise(),
+      onViewModelReady: (vm) => vm.getTableReservations(),
       builder: (context, vm, child) {
         return BasePage(
           title: "Table Reservations".tr(),
@@ -65,7 +65,7 @@ class _TableReservationsState extends State<TableReservations>   with AutomaticK
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                          vm.goToReservationDetails(vm.reservations[index]);
+                          vm.goToTableReservationDetails(vm.reservations[index]);
                         },
                         child: ReservationCard(
                             vm,
@@ -189,7 +189,7 @@ Widget ReservationCard(
                   color: reservation["reservation_data"]["status"] ==
                       "Accepted"
                       ? Colors.green
-                      :reservation["reservation_data"]["status"] == "Rejected" ? Colors.red:Colors.amber,
+                      :reservation["reservation_data"]["status"] == "Rejected" ? Colors.red:reservation["reservation_data"]["status"] == "Pending"?Colors.amber:Colors.grey,
                   fontSize: 16,
                   fontWeight: FontWeight.bold),
               textAlign: TextAlign.center,

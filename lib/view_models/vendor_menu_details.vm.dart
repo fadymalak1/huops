@@ -77,100 +77,10 @@ class VendorDetailsWithMenuViewModel extends VendorDetailsViewModel {
     // );
   }
 
-  removeFavouriteVendor(Vendor? vendor, context) {
-
-    showDialog(
-        context: context,
-        builder: (context) {
-          return Center(
-              child: Container(
-                height: MediaQuery.of(context).size.height * .42,
-                width: MediaQuery.of(context).size.width * .7,
-                padding: EdgeInsets.all(20),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(15),
-                  color: Color(0xff56516f).withOpacity(.9),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 70,
-                      height: 70,
-                      child: Image.asset(
-                        "assets/images/warning.png",
-                      ),
-                    ),
-                    10.heightBox,
-                    Text(
-                      "Remove Vendor From Favourite".tr(),
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                          color: Colors.white),
-                      textAlign: TextAlign.center,
-                    ),
-
-                    10.heightBox,
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        ElevatedButton(
-                          onPressed: () async {
-                            Navigator.pop(context);
-                          },
-                          style: ButtonStyle(
-                            shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15.0),
-                                // side: BorderSide(color: Colors.red),
-                              ),
-                            ),
-                            backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.white),
-                          ),
-                          child: Container(
-                            width: 60,
-                            // padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 15),
-                            child: Center(
-                                child: Text(
-                                  "Cancel".tr(),
-                                  style: TextStyle(color: Colors.black),
-                                )),
-                          ),
-                        ),
-                        ElevatedButton(
-                          onPressed: () async {
-                            viewContext.pop();
-                            processRemoveVendor(vendor!, context);
-                          },
-                          style: ButtonStyle(
-                            shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                              RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(15.0)),
-                            ),
-                            backgroundColor: MaterialStateProperty.all<Color>(
-                                AppColor.primaryColor),
-                          ),
-                          child: Container(
-                            width: 60,
-                            // padding: const EdgeInsets.symmetric(vertical: 8.0,horizontal: 15),
-                            child: Center(
-                                child: Text(
-                                  "Remove".tr(),
-                                  style: TextStyle(color: Colors.white),
-                                )),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
-                ),
-              )
-          );
-        });
+  Future<bool> addToFav()async{
+    bool result= await _vendorRequest.addToFav(vendor!.id);
+    // notifyListeners();
+    return result;
   }
 
   void getVendorDetails() async {
@@ -212,17 +122,13 @@ class VendorDetailsWithMenuViewModel extends VendorDetailsViewModel {
     isFav=await _vendorRequest.getFavStatus(vendor!.id);
     notifyListeners();
   }
+
   getVendorImages() async {
     //
     vendorImages = await _vendorRequest.getVendorImages(vendor!.id);
     notifyListeners();
   }
 
-  Future<bool> addToFav()async{
-    bool result= await _vendorRequest.addToFav(vendor!.id);
-    // notifyListeners();
-    return result;
-  }
   updateUiComponents() {
     //
     if (!vendor!.hasSubcategories) {

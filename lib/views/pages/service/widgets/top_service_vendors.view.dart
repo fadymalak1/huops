@@ -1,5 +1,6 @@
 
 import 'package:double_back_to_close/toast.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:huops/models/vendor_type.dart';
 import 'package:huops/utils/ui_spacer.dart';
@@ -55,120 +56,65 @@ class TopServiceVendors extends StatelessWidget {
                   CustomGridView(
                     noScrollPhysics: true,
                     dataSet: isSortedByPopular == true ? model.vendors : model.vendorsStorageBags,
-                    mainAxisSpacing: 0,
+                    mainAxisSpacing: 20,
                     crossAxisSpacing: 0,
                     crossAxisCount: 1,
                     childAspectRatio:MediaQuery.of(context).size.width < 390 ? 9/4 : 9/3,//2.7
                     itemBuilder: (context, index) {
                       //
                       final vendor = isSortedByPopular == true ? model.vendors[index]  : model.vendorsStorageBags[index];
-                      model.getFavStatus(vendor);
+                      // model.getFavStatus(vendor);
                       return Container(
                         decoration: BoxDecoration(borderRadius: BorderRadius.circular(15)),
-                        padding: EdgeInsets.all(10),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Row(
-                              children: [
-                                CustomImage(
-                                  imageUrl: vendor.logo,
-                                  height: 100,
-                                  width: 100,
-                                ).box.roundedSM.clip(Clip.antiAlias).make(),
-                                5.widthBox,
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                  children: [
-                                    10.heightBox,
-                                    //name
-                                    vendor.name.text.lg.semiBold.maxLines(1).ellipsis.make(),
-                                    //rating
-                                    VxRating(
-                                      maxRating: 5.0,
-                                      value: double.parse(vendor.rating.toString()),
-                                      isSelectable: false,
-                                      onRatingUpdate: (value) {},
-                                      selectionColor: AppColor.ratingColor,
-                                      size: 17,
-                                    ),
-                                    Container(
-                                      height: 30,
-                                      width: 30,
-                                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(10)),
-                                      child: vendor.rating.toString().text.color(AppColor.primaryColor).make().centered(),
-                                    ).glassMorphic(opacity: .1),
-                                    Row(
-                                      children: [
-                                        vendor.reviews_count.toString().text.white.make(),
-                                        8.widthBox,
-                                        "Reviews".text.white.make(),
-                                      ],
-                                    ),
-                                    5.heightBox,
-                                  ],
-                                ),
-                              ],
-                            ),
+                            CustomImage(
+                              imageUrl: vendor.logo,
+                              height: 100,
+                              width: 100,
+                            ).box.roundedSM.clip(Clip.antiAlias).make(),
+                            10.widthBox,
                             Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                // favourites
-                                InkWell(
-                                  onTap: () async {
-                                    if (model.isFav) {
-                                      model.isFav = false;
-                                      Toast.show(
-                                          model.isFav
-                                              ? "Added to favourite"
-                                              : "Removed from favourite",
-                                          context);
-                                      model.notifyListeners();
+                                //name
+                                vendor.name.text.xl.bold.maxLines(1).color(AppColor.primaryColor).ellipsis.make(),
 
-                                      model.processRemoveVendor(vendor, context);
-                                    } else {
-                                      model.isFav = true;
-                                      Toast.show(
-                                          model.isFav
-                                              ? "Added to favourite"
-                                              : "Removed from favourite",
-                                          context);
-                                      model.notifyListeners();
-                                      await model.addToFav(vendor);
-                                    }
-                                  },
-                                  child: Icon(model.isFav
-                                      ? Icons.favorite
-                                      : Icons.favorite_border,
-                                    size: 20,),
-                                ),
-                                20.heightBox,
-                                //location
-                                Container(
-                                  height: 30,
-                                  width:30,
-                                  child: InkWell(
-                                    onTap: () async {
-                                      if (await MapLauncher.isMapAvailable(MapType.google) ?? false) {
-                                        await MapLauncher.showDirections(
-                                          mapType: MapType.google,
-                                          destination: Coords(
-                                            double.parse(vendor.latitude),
-                                            double.parse(vendor.longitude),
-                                          ),
-                                          destinationTitle: vendor.name,
-                                        );
-                                      }
-                                    },
-                                    child: Icon(Icons.location_on,color: Colors.red, size: 20,),
-                                  ),
-                                ),
+                                Text(vendor.description.toString(),style: TextStyle(fontSize: 12,color: Colors.grey),maxLines: 2,overflow: TextOverflow.ellipsis).text.make().wOneThird(context),
+                                SizedBox(height: 5,),
+                                // Expanded(child: Text(vendor.address,style: TextStyle(fontSize: 12),maxLines: 2,overflow: TextOverflow.ellipsis).text.make().wOneThird(context)),
+                                15.heightBox,
+                                VxRating(
+                                  maxRating: 5.0,
+                                  value: double.parse(vendor.rating.toString()),
+                                  isSelectable: false,
+                                  onRatingUpdate: (value) {},
+                                  selectionColor: AppColor.ratingColor,
+                                  size: 15,
+                                ).p4().glassMorphic(),
                               ],
+                            ),
+                            Spacer(),
+                            IconButton(
+                              onPressed: () async {
+                                if (await MapLauncher.isMapAvailable(MapType.google) ?? false) {
+                                  await MapLauncher.showDirections(
+                                    mapType: MapType.google,
+                                    destination: Coords(
+                                      double.parse(vendor.latitude),
+                                      double.parse(vendor.longitude),
+                                    ),
+                                    destinationTitle: vendor.name,
+                                  );
+                                }
+                              },
+                              icon: CircleAvatar(backgroundColor: AppColor.primaryColor,child: Icon(Icons.location_on,color: Colors.white, size: 20,)),
                             )
                           ],
                         ),
-                      ).glassMorphic(opacity: .1).onInkTap(() => model.vendorSelected(vendor));
+                      ).p12().glassMorphic(opacity: .1).onTap(() => model.vendorSelected(vendor));
                     },
                   ).px20(),
                 ],

@@ -13,8 +13,10 @@ import 'package:huops/constants/app_ui_settings.dart';
 import 'package:huops/models/vendor.dart';
 import 'package:huops/utils/ui_spacer.dart';
 import 'package:huops/view_models/vendor_details.vm.dart';
+import 'package:huops/views/pages/auth/login.page.dart';
 import 'package:huops/views/pages/search/main_search.page.dart';
 import 'package:huops/views/pages/vendor/vendor_reviews.page.dart';
+import 'package:huops/views/pages/vendor_details/menu_page.dart';
 import 'package:huops/widgets/buttons/call.button.dart';
 import 'package:huops/widgets/buttons/custom_button.dart';
 import 'package:huops/widgets/buttons/route.button.dart';
@@ -516,9 +518,10 @@ class _VendorDetailsHeaderState extends State<VendorDetailsHeader> {
                                 crossAxisAlignment: CrossAxisAlignment
                                     .center,
                                 children: [
-                                  GestureDetector(onTap: (){openTimeDialog();},child: TimeButton(widget.model.vendor!, size: 20)),
+                                  GestureDetector(onTap: (){widget.model.vendor!.prepareTime!=null?openTimeDialog():Toast.show("Time not available", context);},child: TimeButton(widget.model.vendor!, size: 20)),
                                   Text("Time",
-                                      style: TextStyle(fontSize: 12)),
+                                      style: TextStyle(fontSize: 12),
+                                  ),
 
                                 ],
                               ),
@@ -529,6 +532,7 @@ class _VendorDetailsHeaderState extends State<VendorDetailsHeader> {
                                 InkWell(
                                   onTap: () async {
                                     log(widget.model.isFav.toString());
+                                    if(widget.model.isAuthenticated()){
                                     if (widget.model.isFav) {
                                       widget.model.isFav = false;
                                       Toast.show(
@@ -548,6 +552,8 @@ class _VendorDetailsHeaderState extends State<VendorDetailsHeader> {
                                           context);
                                       widget.model.notifyListeners();
                                       await widget.model.addToFav();
+                                    }}else{
+                                      Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
                                     }
                                   },
                                   child: Container(
@@ -574,12 +580,14 @@ class _VendorDetailsHeaderState extends State<VendorDetailsHeader> {
                             ),
 
                             Spacer(),
-                            widget.model.isAuthenticated()
-                                ? widget.isDelivery?Column(
+                             widget.isDelivery?Column(
                               children: [
                                 InkWell(
                                   onTap: () {
-                                    openBookingDialog();
+                                    widget.model.isAuthenticated()
+                                        ?
+                                    openBookingDialog():
+                                    Navigator.push(context, MaterialPageRoute(builder: (context)=>LoginPage()));
                                   },
                                   child: Container(
                                     padding: EdgeInsets.symmetric(
@@ -599,7 +607,7 @@ class _VendorDetailsHeaderState extends State<VendorDetailsHeader> {
                                     "Book", style: TextStyle(fontSize: 12)),
                               ],
                             ):SizedBox()
-                                : UiSpacer.emptySpace(),
+
                           ],
                       ),
                     ],
@@ -642,6 +650,21 @@ class _VendorDetailsHeaderState extends State<VendorDetailsHeader> {
                           .delivery == 1 ? Colors.green : Colors.red)),
                 ],
               ),
+              Spacer(),
+              GestureDetector(
+                onTap: (){
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>MenuPage(model: widget.model,),),);
+                },
+                child: Column(
+                  children: [
+                    Image.asset("assets/images/menu.png", width: 40,),
+                    SizedBox(height: 5,),
+                    Text("Menu",
+                        style: TextStyle(fontSize: 12, color:Colors.amber)),
+                  ],
+                ),
+              ),
+              Spacer(),
               Column(
                 children: [
                   Text("Pickup", style: TextStyle(fontSize: 12)),

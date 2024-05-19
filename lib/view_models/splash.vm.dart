@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:cool_alert/cool_alert.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';

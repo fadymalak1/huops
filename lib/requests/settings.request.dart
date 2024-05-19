@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dio/dio.dart';
 import 'package:huops/constants/api.dart';
 import 'package:huops/models/api_response.dart';
@@ -9,6 +11,7 @@ class SettingsRequest extends HttpService {
   Future<ApiResponse> appSettings() async {
     try {
       final apiResult = await get(Api.appSettings);
+      log(apiResult.toString());
       return ApiResponse.fromResponse(apiResult);
     } on DioError catch (error) {
       if (error.type == DioErrorType.other) {

@@ -7,6 +7,7 @@ import 'package:huops/models/vendor.dart';
 import 'package:huops/models/product.dart';
 import 'package:huops/models/vendor_images.dart';
 import 'package:huops/requests/favourite.request.dart';
+import 'package:huops/requests/product.request.dart';
 import 'package:huops/requests/vendor.request.dart';
 import 'package:huops/constants/app_strings.dart';
 import 'package:huops/view_models/base.view_model.dart';
@@ -27,6 +28,7 @@ class VendorDetailsViewModel extends MyBaseViewModel {
   //
   VendorRequest _vendorRequest = VendorRequest();
   // VendorImages vendorImages=VendorImages();
+  ProductRequest _productRequest = ProductRequest();
 
   //
   FavouriteRequest favouriteRequest = FavouriteRequest();
@@ -65,6 +67,51 @@ class VendorDetailsViewModel extends MyBaseViewModel {
       print("error ==> ${error}");
     }
     setBusy(false);
+  }
+  RefreshController getRefreshController(int key) {
+    int index = refreshContollerKeys.indexOf(key);
+    return refreshContollers[index];
+  }
+
+  loadMoreProducts(int id, {bool initialLoad = true}) async {
+    int queryPage = menuProductsQueryPages[id] ?? 1;
+    if (initialLoad) {
+      queryPage = 1;
+      menuProductsQueryPages[id] = queryPage;
+      getRefreshController(id).refreshCompleted();
+      setBusyForObject(id, true);
+    } else {
+      menuProductsQueryPages[id] = ++queryPage;
+    }
+
+    //load the products by subcategory id
+    try {
+      final mProducts = await _productRequest.getProdcuts(
+        page: queryPage,
+        queryParams: {
+          "menu_id": id,
+          "vendor_id": vendor!.id,
+        },
+      );
+
+      //
+      if (initialLoad) {
+        menuProducts[id] = mProducts;
+      } else {
+        menuProducts[id]!.addAll(mProducts);
+      }
+    } catch (error) {
+      print("load more error ==> $error");
+    }
+
+    //
+    if (initialLoad) {
+      setBusyForObject(id, false);
+    } else {
+      getRefreshController(id).loadComplete();
+    }
+
+    notifyListeners();
   }
 
   void productSelected(Product product) async {

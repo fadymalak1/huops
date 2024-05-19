@@ -96,7 +96,7 @@ class _ServicePageState extends State<ServicePage>
                               .make(),
                           VStack(
                             [
-                              "Search beauty center".tr().text.lg.semiBold.make(),
+                              "Search for ${widget.vendorType.name}".tr().text.lg.semiBold.make(),
                             ],
                           ).px12().expand(),
                         ],

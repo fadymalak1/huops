@@ -71,7 +71,7 @@ class _FoodPageState extends State<FoodPage>
                     //search bar
                     SearchBarInput(
                       hintText:
-                          "Search for foods or restaurants".tr(),
+                          "Search for ${widget.vendorType.name}".tr(),
                       readOnly: true,
                       search: Search(
                         vendorType: widget.vendorType,

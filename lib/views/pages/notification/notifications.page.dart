@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:huops/constants/app_colors.dart';
 import 'package:huops/utils/ui_spacer.dart';
 import 'package:huops/view_models/notifications.vm.dart';
 import 'package:huops/widgets/base.page.dart';
+import 'package:huops/widgets/base.page.withoutNavbar.dart';
 import 'package:huops/widgets/custom_list_view.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:huops/widgets/states/empty.state.dart';
@@ -18,7 +20,7 @@ class NotificationsPage extends StatelessWidget {
       viewModelBuilder: () => NotificationsViewModel(context),
       onViewModelReady: (model) => model.initialise(),
       builder: (context, model, child) {
-        return BasePage(
+        return BasePageWithoutNavBar(
           showAppBar: true,
           showLeadingAction: true,
           title: "Notifications".tr(),
@@ -35,20 +37,24 @@ class NotificationsPage extends StatelessWidget {
                 //
                 final notification = model.notifications[index];
                 return
-                  VStack(
-                  [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                  children:[
+
                     //title
-                    "${notification.title}"
-                        .text
-                        .bold
-                        .fontFamily(GoogleFonts.nunito().fontFamily!)
-                        .make(),
-                    //time
-                    notification.formattedTimeStamp.text.medium
-                        .color(Colors.grey)
-                        .fontFamily(GoogleFonts.nunito().fontFamily!)
-                        .make()
-                        .pOnly(bottom: 5),
+                    Row(children: [
+                      "${notification.title}"
+                          .text
+                          .bold
+                          .fontFamily(GoogleFonts.nunito().fontFamily!)
+                          .make(),
+                      Spacer(),
+                      notification.read??true?SizedBox():CircleAvatar(
+                        radius: 3,
+                        backgroundColor: AppColor.primaryColor,
+                      )
+                    ],),
+
                     //body
                     "${notification.body}"
                         .text
@@ -56,21 +62,25 @@ class NotificationsPage extends StatelessWidget {
                         .overflow(TextOverflow.ellipsis)
                         .fontFamily(GoogleFonts.nunito().fontFamily!)
                         .make(),
+                    //time
+                    Row(children: [
+                      Spacer(),
+                      notification.formattedTimeStamp.text.medium
+                          .color(Colors.grey).sm
+                          .fontFamily(GoogleFonts.nunito().fontFamily!)
+                          .make(),
+                    ],)
                   ],
-                    crossAlignment: CrossAxisAlignment.center,
                 )
-                    .px20()
-                    .py12()
+                    .p12()
                     .box
-                    .color(Color(0xff56516f))
-                    .make()
-                    .pOnly(top: 8)
-                    .onInkTap(() {
+                    .make().glassMorphic(opacity:notification.read??true?0:0.1)
+                    .onTap(() {
                   model.showNotificationDetails(notification);
                 });
               },
               // separatorBuilder: (context, index) => UiSpacer.divider(),
-            ),
+            ).p12(),
           ),
         );
       },
