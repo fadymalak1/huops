@@ -13,8 +13,6 @@ import 'package:localize_and_translate/localize_and_translate.dart';
 import 'package:stacked/stacked.dart';
 import 'package:velocity_x/velocity_x.dart';
 
-import '../reservations/hotel_reservations/hotel_reservations.page.dart';
-
 class OrdersPage extends StatefulWidget {
   const OrdersPage({Key? key}) : super(key: key);
 
@@ -54,55 +52,105 @@ class _OrdersPageState extends State<OrdersPage>
         viewModelBuilder: () => vm,
         onViewModelReady: (vm) => vm.initialise(),
         builder: (context, vm, child) {
-          return Scaffold(
-            backgroundColor: Colors.transparent,
-            appBar: AppBar(
-              title: "Orders".tr().text.xl2.semiBold.color(Colors.white).make(),
-              elevation: 0,
-              backgroundColor: AppColor.primaryColor,
-              centerTitle: true,
-            ),
-            body:
-            vm.isAuthenticated()
-                  ? CustomListView(
-                canRefresh: true,
-                canPullUp: true,
-                refreshController: vm.refreshController,
-                onRefresh: vm.fetchMyOrders,
-                onLoading: () => vm.fetchMyOrders(initialLoading: false),
-                isLoading: vm.isBusy,
-                dataSet: vm.orders,
-                hasError: vm.hasError,
-                errorWidget: LoadingError(
-                  onrefresh: vm.fetchMyOrders,
+          return DefaultTabController(
+            length: 2,
+            child: Scaffold(
+              backgroundColor: Colors.transparent,
+              appBar: AppBar(
+                title: "Orders".tr().text.xl2.semiBold.color(Colors.white).make(),
+                elevation: 0,
+                backgroundColor: AppColor.primaryColor,
+                centerTitle: true,
+                bottom: TabBar(
+                  tabs: [
+                    Tab(text: 'Orders'.tr()),
+                    Tab(text: 'Orders Completed'.tr()),
+                  ],
                 ),
-                //
-                emptyWidget: EmptyOrder(),
-                itemBuilder: (context, index) {
+              ),
+              body: TabBarView(children: [
+                vm.isAuthenticated()
+                    ? CustomListView(
+                  canRefresh: true,
+                  canPullUp: true,
+                  refreshController: vm.refreshController,
+                  onRefresh: vm.fetchMyOrders,
+                  onLoading: () => vm.fetchMyOrders(initialLoading: false),
+                  isLoading: vm.isBusy,
+                  dataSet: vm.orders,
+                  hasError: vm.hasError,
+                  errorWidget: LoadingError(
+                    onrefresh: vm.fetchMyOrders,
+                  ),
                   //
-                  final order = vm.orders[index];
-                  //for taxi tye of order
-                  if (order.taxiOrder != null) {
-                    return TaxiOrderListItem(
+                  emptyWidget: EmptyOrder(),
+                  itemBuilder: (context, index) {
+                    //
+                    final order = vm.orders[index];
+                    //for taxi tye of order
+                    if (order.taxiOrder != null) {
+                      return TaxiOrderListItem(
+                        order: order,
+                        orderPressed: () => vm.openOrderDetails(order),
+                      );
+                    }
+                    return OrderListItem(
                       order: order,
                       orderPressed: () => vm.openOrderDetails(order),
+                      onPayPressed: () =>
+                          OrderService.openOrderPayment(order, vm),
                     );
-                  }
-                  return OrderListItem(
-                    order: order,
-                    orderPressed: () => vm.openOrderDetails(order),
-                    onPayPressed: () =>
-                        OrderService.openOrderPayment(order, vm),
-                  );
-                },
-                separatorBuilder: (context, index) =>
-                    UiSpacer.verticalSpace(space: 15),
-              ).py12()
-                  : EmptyState(
-                auth: true,
-                showAction: true,
-                actionPressed: vm.openLogin,
-              ).py12().centered().expand(),
+                  },
+                  separatorBuilder: (context, index) =>
+                      UiSpacer.verticalSpace(space: 15),
+                )
+                    : EmptyState(
+                  auth: true,
+                  showAction: true,
+                  actionPressed: vm.openLogin,
+                ).py12().centered().expand(),
+                vm.isAuthenticated()?
+                CustomListView(
+                  // canRefresh: true,
+                  // canPullUp: true,
+                  refreshController: vm.refreshController,
+                  // onRefresh: vm.fetchMyOrders,
+                  onLoading: () => vm.fetchMyOrders(initialLoading: false),
+                  isLoading: vm.isBusy,
+                  dataSet: vm.ordersCompleted,
+                  hasError: vm.hasError,
+                  errorWidget: LoadingError(
+                    onrefresh: vm.fetchMyOrders,
+                  ),
+                  //
+                  emptyWidget: EmptyOrder(),
+                  itemBuilder: (context, index) {
+                    //
+                    final order = vm.ordersCompleted[index];
+                    //for taxi tye of order
+                    if (order.taxiOrder != null) {
+                      return TaxiOrderListItem(
+                        order: order,
+                        orderPressed: () => vm.openOrderDetails(order),
+                      );
+                    }
+                    return OrderListItem(
+                      order: order,
+                      orderPressed: () => vm.openOrderDetails(order),
+                      onPayPressed: () =>
+                          OrderService.openOrderPayment(order, vm),
+                    );
+                  },
+                  separatorBuilder: (context, index) =>
+                      UiSpacer.verticalSpace(space: 15),
+                )
+                    : EmptyState(
+                  auth: true,
+                  showAction: true,
+                  actionPressed: vm.openLogin,
+                ).py12().centered().expand()
+              ]).pOnly(top: Vx.dp20),
+            ),
           );
         });
   }

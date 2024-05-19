@@ -19,6 +19,7 @@ class OrdersViewModel extends PaymentViewModel {
   //
   OrderRequest orderRequest = OrderRequest();
   List<Order> orders = [];
+  List<Order> ordersCompleted = [];
   //
   int queryPage = 1;
   RefreshController refreshController = RefreshController();
@@ -61,11 +62,34 @@ class OrdersViewModel extends PaymentViewModel {
 
     try {
       final mOrders = await orderRequest.getOrders(page: queryPage);
+      print("#####THIS IS MY ORDERS########${mOrders[0].status}");
       if (!initialLoading) {
-        orders.addAll(mOrders);
-        refreshController.loadComplete();
+        for(int i = 0 ; i < mOrders.length ; i++){
+          if(mOrders[i].status == "cancelled"||mOrders[i].status == "delivered"){
+            ordersCompleted.add(mOrders[i]);
+            refreshController.loadComplete();
+
+          }else{
+            orders.add(mOrders[i]);
+            refreshController.loadComplete();
+
+          }
+        }
+        // orders.addAll(mOrders);
+        // refreshController.loadComplete();
       } else {
-        orders = mOrders;
+        ordersCompleted=[];
+        orders =[];
+        for(int i = 0 ; i < mOrders.length ; i++){
+          if(mOrders[i].status == "cancelled"||mOrders[i].status == "delivered"){
+            ordersCompleted.add(mOrders[i]);
+            refreshController.loadComplete();
+          }else{
+            orders.add(mOrders[i]);
+            refreshController.loadComplete();
+          }
+        }
+        // orders = mOrders;
       }
       clearErrors();
     } catch (error) {
