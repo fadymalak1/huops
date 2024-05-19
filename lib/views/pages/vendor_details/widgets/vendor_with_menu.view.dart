@@ -138,6 +138,7 @@ class _VendorDetailsWithMenuPageState extends State<VendorDetailsWithMenuPage>
                       ),
                     ),
                     onRatingUpdate: (value) {},
+
                   ).pOnly(right: 2),
                   SizedBox(height: 15,),
                   !model.isBusy?model.vendorImages.panorama!=null?Column(

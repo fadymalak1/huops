@@ -7,62 +7,13 @@
     <list default="true" id="934744b1-846e-4318-a254-8edca82964c8" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/.flutter-plugins" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/.flutter-plugins-dependencies" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/images/icons/booking.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/assets/images/menu.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/views/pages/favourite/fav_service_data.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/views/pages/reservations/hotel_reservations/hotel_reservations.page.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/views/pages/reservations/hotel_reservations/reservation_details.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/views/pages/reservations/reservations.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/views/pages/reservations/table_reservations/reservation_details.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/views/pages/reservations/table_reservations/table_reservations.page.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/views/pages/vendor_details/menu_page.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/views/pages/vendor_details/reservation_hotel_rooms.dart" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/lib/views/pages/vendor_details/reservation_hotel_rooms_details.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/huops.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/huops.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_Packages.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Dart_SDK.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/lib/views/pages/rate_review/rate_review.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/libraries/Flutter_Plugins.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/android/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/android/app/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/constants/api.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/constants/api.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/models/search.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/models/search.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/requests/favourite.request.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/requests/favourite.request.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/requests/settings.request.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/requests/settings.request.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/requests/vendor.request.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/requests/vendor.request.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/resources/app_icons.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/resources/app_icons.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/view_models/favourite.vm.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/view_models/favourite.vm.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/images/faqs.png" beforeDir="false" afterPath="$PROJECT_DIR$/assets/images/faqs.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/view_models/favourites.vm.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/view_models/favourites.vm.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/view_models/product_details.vm.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/view_models/product_details.vm.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/view_models/profile.vm.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/view_models/profile.vm.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/view_models/reservation.vm.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/view_models/reservation.vm.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/view_models/service_details.vm.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/view_models/service_details.vm.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/view_models/service_vendor_details.vm.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/view_models/service_vendor_details.vm.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/view_models/splash.vm.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/view_models/splash.vm.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/view_models/vendor/top_vendors.vm.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/view_models/vendor/top_vendors.vm.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/view_models/vendor_details.vm.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/view_models/vendor_details.vm.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/view_models/vendor_menu_details.vm.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/view_models/vendor_menu_details.vm.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/views/pages/favourite/fav_data.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/pages/favourite/fav_vendor_data.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/views/pages/favourite/favourites.page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/pages/favourite/favourites.page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/views/pages/food/food.page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/pages/food/food.page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/views/pages/notification/notifications.page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/pages/notification/notifications.page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/views/pages/onboarding.page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/pages/onboarding.page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/views/pages/order/orders.page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/pages/order/orders.page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/views/pages/service/service.page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/pages/service/service.page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/views/pages/service/service_details.page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/pages/service/service_details.page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/views/pages/service/storage_bags_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/pages/service/storage_bags_page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/views/pages/service/widgets/top_service_vendors.view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/pages/service/widgets/top_service_vendors.view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/views/pages/table_reservations/reservation_details.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/pages/reservations/bag_reservations/reservation_details.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/views/pages/table_reservations/table_reservations.page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/pages/reservations/bag_reservations/bag_reservations.page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/views/pages/vendor_details/reservation_storage_bags.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/pages/vendor_details/reservation_storage_bags.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/views/pages/vendor_details/reservation_storage_bags_details.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/pages/vendor_details/reservation_storage_bags_details.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/views/pages/vendor_details/service_vendor_details.page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/pages/vendor_details/service_vendor_details.page.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/views/pages/vendor_details/widgets/vendor_details_header.view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/pages/vendor_details/widgets/vendor_details_header.view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/views/pages/vendor_details/widgets/vendor_plain_details.view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/pages/vendor_details/widgets/vendor_plain_details.view.dart" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/lib/views/pages/vendor_details/widgets/vendor_with_menu.view.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/views/pages/vendor_details/widgets/vendor_with_menu.view.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/widgets/bottomsheets/search_filter.bottomsheet.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/bottomsheets/search_filter.bottomsheet.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/widgets/drawers/main_drawer.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/drawers/main_drawer.dart" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/lib/widgets/list_items/grid_view_service.list_item.dart" beforeDir="false" afterPath="$PROJECT_DIR$/lib/widgets/list_items/grid_view_service.list_item.dart" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,26 +41,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
-    &quot;io.flutter.reload.alreadyRun&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/jmskef/HuopsApps/APPS/Apps/Customer/my_github customer/huops/lib/views/pages/reservations&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;flutter.settings&quot;,
-    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "cidr.known.project.marker": "true",
+    "dart.analysis.tool.window.visible": "false",
+    "io.flutter.reload.alreadyRun": "true",
+    "last_opened_file_path": "D:/jmskef/HuopsApps/APPS/Apps/Customer/my_github customer/huops/assets/images",
+    "settings.editor.selected.configurable": "flutter.settings",
+    "show.migrate.to.gradle.popup": "false"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\jmskef\HuopsApps\APPS\Apps\Customer\my_github customer\huops\assets\images" />
       <recent name="D:\jmskef\HuopsApps\APPS\Apps\Customer\my_github customer\huops\lib\views\pages\reservations" />
       <recent name="D:\jmskef\HuopsApps\APPS\Apps\Customer\my_github customer\huops" />
-      <recent name="D:\jmskef\HuopsApps\APPS\Apps\Customer\my_github customer\huops\assets\images" />
       <recent name="D:\jmskef\HuopsApps\APPS\Apps\Customer\huops-customer (github)\huops-customer\lib\view_models" />
       <recent name="D:\jmskef\HuopsApps\APPS\Apps\Customer\huops-customer (github)\huops-customer\lib\views\pages\vendor_details" />
     </key>

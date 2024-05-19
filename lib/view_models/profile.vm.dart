@@ -9,6 +9,7 @@ import 'package:huops/view_models/payment.view_model.dart';
 import 'package:huops/views/pages/loyalty/loyalty_point.page.dart';
 import 'package:huops/views/pages/profile/account_delete.page.dart';
 import 'package:huops/views/pages/profile/contact_us.page.dart';
+import 'package:huops/views/pages/rate_review/rate_review.dart';
 import 'package:huops/views/pages/reservations/reservations.dart';
 import 'package:huops/views/pages/splash.page.dart';
 import 'package:huops/constants/api.dart';
@@ -193,14 +194,7 @@ class ProfileViewModel extends PaymentViewModel {
    * App Rating & Review
    */
   openReviewApp() async {
-    final InAppReview inAppReview = InAppReview.instance;
-    if (Platform.isAndroid) {
-      inAppReview.openStoreListing(appStoreId: AppStrings.appStoreId);
-    } else if (await inAppReview.isAvailable()) {
-      inAppReview.requestReview();
-    } else {
-      inAppReview.openStoreListing(appStoreId: AppStrings.appStoreId);
-    }
+    Navigator.push(viewContext, MaterialPageRoute(builder: (context) => RateAndReview(),));
   }
 
   openReservations() {

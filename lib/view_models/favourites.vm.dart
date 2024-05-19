@@ -376,7 +376,7 @@ class FavouritesViewModel extends MyBaseViewModel {
     CoolAlert.show(
       context: viewContext,
       type: apiResponse.allGood ? CoolAlertType.success : CoolAlertType.error,
-      title: "Remove Product From Favourite".tr(),
+      title: "Product Removed From Favourite".tr(),
       text: apiResponse.message,
       confirmBtnTextStyle: TextStyle(color: Colors.black),
     );
@@ -400,7 +400,7 @@ class FavouritesViewModel extends MyBaseViewModel {
     CoolAlert.show(
       context: viewContext,
       type: apiResponse.allGood ? CoolAlertType.success : CoolAlertType.error,
-      title: "Remove Vendor From Favourite".tr(),
+      title: "Vendor Removed From Favourite".tr(),
       text: apiResponse.message,
       confirmBtnTextStyle: TextStyle(color: Colors.black),
     );
